@@ -1,12 +1,12 @@
 from flask import Blueprint, request, jsonify, g
 from datetime import datetime
 from app.db.connection import connect_to_db
-from app.middlewares import auth_middleware
+from app.middlewares import token_required
 
 bp = Blueprint('solicitudes', __name__, url_prefix='/solicitudes')
 
 @bp.post("/crear")
-@auth_middleware
+@token_required
 def crear_solicitud():
     """
     Crea una solicitud y guarda su documentación en base64.
