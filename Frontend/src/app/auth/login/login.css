@@ -1,0 +1,173 @@
+.inicio-sesion-page {
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-image: url('/assets/img/fondoLogin.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  position: relative;
+}
+
+.container-main {
+  margin-top: 3rem;
+}
+
+.card {
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.login-card {
+  border: 1px solid #e0e0e0;
+  padding: 2rem;
+}
+
+.login-card h2 {
+  color: #343a40;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  border: none;
+  border-bottom: 2px solid #007bff;
+  border-radius: 0;
+  padding: 0.5rem 0;
+  margin-bottom: 1.5rem;
+  box-shadow: none !important;
+}
+
+.form-control:focus {
+  border-color: #0056b3;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
+  background-color: #28a745;
+  border-color: #28a745;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+  transform: scale(1.06);
+  transition: 0.4s;
+}
+
+.btn-primary:hover i {
+  animation: shake 0.6s ease;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-15deg);
+  }
+  40% {
+    transform: rotate(15deg);
+  }
+  60% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.forgot-password-link {
+  display: block;
+  margin-top: 1rem;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.privacy-notice {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.info-card-dark {
+  background-color: #343a40;
+  color: #ffffff;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.info-card-dark h3 {
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.info-card-dark .btn-secondary {
+  background-color: #28a745;
+  border-color: #28a745;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  transition: 0.3s ease;
+}
+
+.info-card-dark .btn-secondary:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+  transform: scale(1.06);
+  transition: 0.4s;
+}
+
+.info-card-blue {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 2rem;
+  text-align: center;
+}
+
+.info-card-blue .btn-info {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  transition: 0.3s ease;
+}
+
+.info-card-blue .btn-info:hover {
+  background-color: #004085;
+  border-color: #00306c;
+  transform: scale(1.06);
+  transition: 0.4s;
+}
+
+.digitbeneficios-text {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+}

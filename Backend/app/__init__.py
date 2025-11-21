@@ -18,9 +18,15 @@ def create_app():
 
     # Habilitar CORS (para permitir conexión desde Angular)
     # Puedes restringir a tu dominio de Angular si quieres:
-    # CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})
+    frontend_origin = os.getenv("FRONTEND_BASE_URL", "http://localhost:4200")
+    
+    CORS(
+        app, 
+        resources={r"/api/*": {"origins": frontend_origin}},
+        supports_credentials=True
+    )
 
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    # CORS(app, resources={r"/*": {"origins": "*"}})
 
     # Registrar blueprints
     for bp in blueprints:

@@ -1,0 +1,10 @@
+<div class="custom-modal-overlay">
+  <div class="custom-modal-content">
+    <h4 *ngIf="title">{{ title }}</h4>
+    <p *ngIf="message">{{ message }}</p>
+
+    <button *ngIf="showCloseButton" (click)="onClose()">
+      Cerrar
+    </button>
+  </div>
+</div>

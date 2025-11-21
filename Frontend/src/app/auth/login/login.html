@@ -1,0 +1,79 @@
+<div class="inicio-sesion-page">
+  <!-- Main Content -->
+  <div class="container container-main">
+    <div class="row justify-content-center">
+      <!-- Login Card -->
+      <div class="col-lg-5 col-md-6 mb-4">
+        <div class="card login-card">
+          <h2 class="text-center">Iniciar sesión</h2>
+          <form (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="username" class="form-label">Nombre de usuario:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                [(ngModel)]="username"
+                name="username"
+                placeholder="Ingrese su usuario..."
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña:</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                [(ngModel)]="password"
+                name="password"
+                placeholder="Contraseña..."
+              />
+              <div *ngIf="showPasswordError" class="error-message mt-2">
+                Usuario o contraseña incorrectos, vuelva a intentar.
+              </div>
+            </div>
+            <div class="d-grid gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="isSubmitting"
+              >
+                Entrar <i class="pi pi-unlock" style="font-size: 1rem;"></i>
+              </button>
+            </div>
+            <a
+              routerLink="/recuperacion"
+              class="forgot-password-link text-center"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
+            <p class="privacy-notice text-center">Aviso de privacidad</p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Info Cards -->
+      <div class="col-lg-5 col-md-6">
+        <div class="card info-card-dark mb-4">
+          <h3>¿No tienes una cuenta?</h3>
+          <a routerLink="/registro" class="btn btn-secondary">
+            Crear cuenta <i class="pi pi-user-plus"></i>
+          </a>
+        </div>
+        <div class="card info-card-blue">
+          <h2>¿Ya conoces los</h2>
+          <div class="digitbeneficios-text">DigitBeneficios?</div>
+          <button class="btn btn-info">¡Quiero conocerlos!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal reutilizable -->
+  <app-modal
+    *ngIf="showModal"
+    [title]="modalTitle"
+    [message]="modalMessage"
+    (close)="closeCustomModal()"
+  ></app-modal>
+</div>

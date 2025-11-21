@@ -9,7 +9,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 SECRET_KEY = os.getenv("JWT_SECRET_KEY") or os.getenv("SECRET_KEY")
 
-@bp.route("/login")
+@bp.route("/login",methods=["POST"])
 def login():
     try:
         data = request.get_json(silent=True) or {}
