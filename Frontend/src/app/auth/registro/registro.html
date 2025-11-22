@@ -1,0 +1,114 @@
+<!-- src/app/auth/registro/registro.component.html -->
+
+<div class="registro-page">
+  <div class="container container-main">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="card registro-card">
+          <h2 class="text-center">Crear cuenta</h2>
+          <p class="subtitle text-center">
+            Únete a DigitBus y comienza tu experiencia
+          </p>
+
+          <form (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre completo:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombre"
+                [(ngModel)]="nombre"
+                name="nombre"
+                placeholder="Ingrese su nombre completo"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo electrónico:</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                [(ngModel)]="email"
+                name="email"
+                placeholder="correo@ejemplo.com"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña:</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                [(ngModel)]="password"
+                name="password"
+                placeholder="Mínimo 8 caracteres"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">
+                Confirmar contraseña:
+              </label>
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                [(ngModel)]="confirmPassword"
+                name="confirmPassword"
+                placeholder="Repita su contraseña"
+                required
+              />
+            </div>
+
+            <div *ngIf="showError" class="error-message mb-3">
+              {{ errorMessage }}
+            </div>
+
+            <div class="mb-3 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="terminos"
+                [(ngModel)]="aceptaTerminos"
+                name="terminos"
+              />
+              <label class="form-check-label" for="terminos">
+                Acepto los
+                <a href="#" class="link-terminos">términos y condiciones</a>
+              </label>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                {{ loading ? 'Creando cuenta...' : 'Crear cuenta' }}
+                <i
+                  [ngClass]="
+                    loading ? 'pi pi-spin pi-spinner' : 'pi pi-user-plus'
+                  "
+                ></i>
+              </button>
+            </div>
+
+            <p class="login-link text-center">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="link-login">Inicia sesión</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <app-modal
+    *ngIf="showModal"
+    [title]="modalTitle"
+    [message]="modalMessage"
+    (close)="closeModal()"
+  ></app-modal>
+</div>

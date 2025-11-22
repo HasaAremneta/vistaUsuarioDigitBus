@@ -1,12 +1,48 @@
-<header class="top-nav">
+<header class="top-nav" *ngIf="currentMode !== 'home-hidden'">
   <div class="nav-left">
-    <img src="assets/img/logo_digitbus_color.svg" alt="DigitBus" class="logo" />
+    <img
+      src="assets/img/logo_digitbus_color.svg"
+      alt="DigitBus"
+      class="logo"
+    />
   </div>
+
   <nav class="nav-links">
-    <a routerLink="/home" routerLinkActive="active-link">Inicio</a>
-    <a routerLink="/historial" routerLinkActive="active-link">Historial</a>
-    <a routerLink="/solicitudes" routerLinkActive="active-link">Solicitar</a>
-    <a routerLink="/renovaciones" routerLinkActive="active-link">Renovar o Extravio</a>
-    <a routerLink="/conocenos" routerLinkActive="active-link">Conócenos</a>
+    <ng-container [ngSwitch]="currentMode">
+
+      <!-- LOGIN -->
+      <ng-container *ngSwitchCase="'login'">
+        <a routerLink="/conocenos" routerLinkActive="active-link">Conócenos</a>
+      </ng-container>
+
+      <!-- REGISTRO -->
+      <ng-container *ngSwitchCase="'register'">
+        <a routerLink="/login" routerLinkActive="active-link">Iniciar sesión</a>
+        <a routerLink="/conocenos" routerLinkActive="active-link">Conócenos</a>
+      </ng-container>
+
+      <!-- RECUPERACIÓN -->
+      <ng-container *ngSwitchCase="'recovery'">
+        <a routerLink="/login" routerLinkActive="active-link">Iniciar sesión</a>
+        <a routerLink="/registro" routerLinkActive="active-link">Crear cuenta</a>
+      </ng-container>
+
+      <!-- CONÓCENOS -->
+      <ng-container *ngSwitchCase="'conocenos'">
+        <a routerLink="/login" routerLinkActive="active-link">Iniciar sesión</a>
+        <a routerLink="/registro" routerLinkActive="active-link">Crear cuenta</a>
+      </ng-container>
+
+      <!-- RESTO -->
+      <ng-container *ngSwitchDefault>
+        <a routerLink="/home" routerLinkActive="active-link">Inicio</a>
+        <a routerLink="/historial" routerLinkActive="active-link">Historial</a>
+        <a routerLink="/solicitudes" routerLinkActive="active-link">Solicitar</a>
+        <a routerLink="/renovaciones" routerLinkActive="active-link">
+          Renovar / Extravio
+        </a>
+      </ng-container>
+
+    </ng-container>
   </nav>
 </header>

@@ -1,0 +1,129 @@
+.registro-page {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.container-main {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+
+.registro-card {
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 3rem;
+  background: white;
+}
+
+.registro-card h2 {
+  color: #2a3547;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 2.2rem;
+}
+
+.subtitle {
+  color: #6c757d;
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #2a3547;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.form-control {
+  border: none;
+  border-bottom: 2px solid #1a6dff;
+  border-radius: 0;
+  padding: 0.75rem 0.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: none !important;
+  font-size: 1rem;
+  background: transparent;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #0056b3;
+  background: transparent;
+}
+
+.form-check {
+  margin-bottom: 2rem;
+}
+
+.form-check-input {
+  margin-right: 0.5rem;
+}
+
+.form-check-label {
+  color: #2a3547;
+  font-size: 0.95rem;
+}
+
+.link-terminos {
+  color: #1a6dff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-terminos:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.9rem;
+  padding: 0.75rem;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 0.5rem;
+}
+
+.btn-primary {
+  background-color: #51c638;
+  border-color: #51c638;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #45a832;
+  border-color: #45a832;
+  transform: scale(1.06);
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+  transform: none;
+}
+
+.login-link {
+  margin-top: 2rem;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+.link-login {
+  color: #1a6dff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-login:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}

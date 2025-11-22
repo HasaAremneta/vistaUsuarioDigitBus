@@ -1,0 +1,58 @@
+<div class="inicio-container">
+
+  <!-- Header propio de HOME (logo + Conócenos + Usuario) -->
+  <header class="top-nav">
+    <img
+      src="assets/img/logo_digitbus_color.svg"
+      alt="DigitBus"
+      class="logo"
+    />
+
+    <nav class="nav-links">
+      <button class="btn-menu" (click)="toggleUserList()">
+        {{ currentUser }}
+        <i class="pi pi-user" style="font-size: large; margin-left: 5px;"></i>
+      </button>
+    </nav>
+  </header>
+
+  <ul class="user-list" *ngIf="lstVisible">
+    <li
+      (click)="irARuta('/Ajustes')"
+      (mouseenter)="ajustesHover = true"
+      (mouseleave)="ajustesHover = false"
+    >
+      <i [ngClass]="ajustesHover ? 'pi pi-spin pi-cog' : 'pi pi-cog'"></i>
+      Ajustes
+    </li>
+    <li (click)="confirmarSalida()" class="option-menu">
+      <i class="pi pi-arrow-left"></i>
+      Cerrar Sesión
+    </li>
+  </ul>
+
+  <!-- Banner principal -->
+  <section class="banner">
+    <div class="banner-text">
+      <h2>Ya ha llegado!!</h2>
+      <h2 style="text-align: center;">el mejor método</h2>
+      <h2 style="float: right;">de pago a León</h2>
+    </div>
+  </section>
+
+  <!-- Accesos rápidos -->
+  <section class="features">
+    <div
+      class="feature-card"
+      *ngFor="let item of accesos"
+      (click)="irARuta(item.ruta)"
+    >
+      <i
+        [ngClass]="item.icon"
+        style="font-size: 2.5rem; padding: 15px;"
+      ></i>
+      <h3>{{ item.titulo }}</h3>
+      <p>{{ item.descripcion }}</p>
+    </div>
+  </section>
+</div>

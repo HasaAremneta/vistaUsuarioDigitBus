@@ -1,0 +1,103 @@
+:root {
+  --azul: #1a6dff;
+  --verde: #51c638;
+  --azul-marino: #2a3547;
+  --blanco: #ffffff;
+}
+
+.conocenos-bg {
+  min-height: calc(100vh - 70px); /* restando el navbar */
+  background: #f7f9fc;
+  font-family: 'Inter', sans-serif;
+  padding: 2rem 1rem;
+}
+
+.conocenos-contenido {
+  max-width: 900px;
+  margin: 3.5rem auto 2rem auto;
+  padding: 1.3rem;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.intro h1 {
+  font-size: 2.3rem;
+  color: var(--azul-marino);
+  margin-bottom: 0.7rem;
+  font-weight: 800;
+}
+
+.intro p {
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Bloques en grid */
+.bloques {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+}
+
+@media (max-width: 750px) {
+  .bloques {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bloque {
+  background: var(--blanco);
+  border-radius: 13px;
+  box-shadow: 0 2.5px 13px rgba(26, 109, 255, 0.04);
+  padding: 2rem 1.3rem;
+  border-left: 8px solid var(--azul);
+  transition: box-shadow 0.2s;
+}
+
+.bloque:hover {
+  box-shadow: 0 7px 32px rgba(26, 109, 255, 0.13);
+}
+
+.bloque h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.bloque p {
+  color: #353535;
+  line-height: 1.7;
+}
+
+/* Colores de títulos y bordes */
+.azul {
+  color: var(--azul);
+}
+
+.verde {
+  color: var(--verde);
+}
+
+.azul-marino {
+  color: var(--azul-marino);
+}
+
+.bloque.verde {
+  border-left-color: var(--verde);
+}
+
+.bloque.azul-marino {
+  border-left-color: var(--azul-marino);
+}
+
+.futuro {
+  border-left-color: #ffd500;
+}
+
+.futuro h2 {
+  color: #ffd500;
+}

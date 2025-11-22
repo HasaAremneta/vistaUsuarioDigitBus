@@ -1,0 +1,131 @@
+.inicio-container {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Header propio del Home */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  height: 40px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-menu {
+  background-color: #ffffff;
+  color: #2b63f3;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #2b63f3;
+  text-decoration: none;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.btn-menu:hover {
+  background-color: #2b63f3;
+  color: white;
+}
+
+/* Banner */
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  background-color: #111;
+  color: white;
+  flex-wrap: wrap;
+  background-image: url('../../assets/img/fondo1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(2px);
+}
+
+.banner-text {
+  width: 100%;
+  backdrop-filter: blur(3px);
+}
+
+.banner-text h2 {
+  font-size: 2.4rem;
+  line-height: 1;
+  text-shadow: black 3px 3px 5px;
+}
+
+/* Features */
+.features {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  gap: 1rem;
+}
+
+.feature-card {
+  background-color: #001f3f;
+  color: white;
+  border-radius: 12px;
+  width: 230px;
+  padding: 1rem;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+  background-color: #023f7b;
+}
+
+/* Menú de usuario */
+.user-list {
+  background-color: transparent;
+  color: white;
+  width: 180px;
+  position: absolute;
+  top: 4.2rem;
+  right: 2rem;
+  z-index: 99;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li {
+  background-color: #023f7b;
+  color: white;
+  list-style: none;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+.user-list li:hover {
+  background-color: white;
+  color: #023f7b;
+  cursor: pointer;
+}
+
+@keyframes salir {
+  0% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+  100% {
+    transform: translateX(-3px);
+  }
+}
+
+.option-menu:hover i {
+  animation: salir 1s ease-in-out infinite;
+}

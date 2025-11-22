@@ -1,0 +1,71 @@
+<div class="recuperacion-page">
+  <div class="container container-main">
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-7">
+        <div class="card recuperacion-card">
+
+          <div class="icon-container">
+            <div class="recovery-icon">
+              <i class="pi pi-lock" style="color: #1a6dff; font-size: larger;"></i>
+            </div>
+          </div>
+
+          <h2 class="text-center">Recuperar contraseña</h2>
+          <p class="subtitle text-center">
+            Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña
+          </p>
+
+          <!-- FORMULARIO -->
+          <form (ngSubmit)="onSubmit()" *ngIf="!emailEnviado">
+            <div class="mb-4">
+              <label for="email" class="form-label">Correo electrónico:</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                [(ngModel)]="email"
+                name="email"
+                placeholder="correo@ejemplo.com"
+                required
+              />
+            </div>
+
+            <div *ngIf="showError" class="error-message mb-3">
+              {{ errorMessage }}
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                {{ loading ? 'Enviando...' : 'Enviar enlace de recuperación' }}
+              </button>
+            </div>
+          </form>
+
+          <!-- ESTADO EMAIL ENVIADO -->
+          <div *ngIf="emailEnviado" class="email-sent-state">
+            <div class="success-icon">✅</div>
+            <h3>¡Correo enviado!</h3>
+            <p>
+              Hemos enviado un enlace de recuperación a
+              <strong>{{ email }}</strong>
+            </p>
+            <p class="small-text">
+              Revisa tu bandeja de entrada y sigue las instrucciones del correo.
+              Si no lo encuentras, revisa tu carpeta de spam.
+            </p>
+            <button (click)="resetForm()" class="btn btn-outline-primary">
+              Enviar a otro correo
+            </button>
+          </div>
+
+          <div class="back-to-login">
+            <a routerLink="/login" class="back-link">
+              ← Volver al inicio de sesión
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
