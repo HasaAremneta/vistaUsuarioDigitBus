@@ -1,9 +1,13 @@
+import { Renovaciones } from './renovaciones/renovaciones';
 import { Routes } from '@angular/router';
 import { Login } from './auth/login/login'
 import { Registro } from './auth/registro/registro';
 import { Recuperacion } from './auth/recuperacion/recuperacion';
 import { Conocenos } from './conocenos/conocenos';
 import { Home } from './home/home';
+import { Historial } from './historial/historial';
+import { Solicitudes } from './solicitudes/solicitudes';
+import { Ajustes } from './ajustes/ajustes';
 
 export const routes: Routes = [
   { path: '',redirectTo: 'login', pathMatch: 'full'},
@@ -15,5 +19,12 @@ export const routes: Routes = [
 
   //Home
   {path: 'home', component: Home},
-
+  //Historial
+  {path: 'historial', component: Historial},
+  //Solicitudes
+  {path: 'Solicitudes', component: Solicitudes},
+  //Renovacion y Extravio
+  {path: 'renovaciones', component: Renovaciones},
+  //Ajustes
+  {path: 'ajustes', component: Ajustes},
 ];

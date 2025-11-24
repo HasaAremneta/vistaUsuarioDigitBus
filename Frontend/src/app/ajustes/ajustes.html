@@ -1,0 +1,28 @@
+<div class="container-main">
+  <div class="settings-card">
+    <h2>Ventana de ajustes</h2>
+
+    <div class="buttons-container">
+      <button (click)="goToAccountSettings()" class="btn-setting">
+        Ajustes de la cuenta
+      </button>
+
+      <button (click)="goToAddCard()" class="btn-setting">
+        Agregar tarjeta
+      </button>
+    </div>
+
+    <a href="#" (click)="goBack(); $event.preventDefault()" class="btn-back">
+      Volver
+    </a>
+  </div>
+</div>
+
+<!-- Modal opcional -->
+<div *ngIf="showModal" class="custom-modal-overlay">
+  <div class="custom-modal-content">
+    <h4>{{ modalTitle }}</h4>
+    <p>{{ modalMessage }}</p>
+    <button (click)="closeCustomModal()">Cerrar</button>
+  </div>
+</div>

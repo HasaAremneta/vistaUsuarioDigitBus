@@ -1,0 +1,133 @@
+/* src/app/solicitudes/solicitudes.component.css */
+
+.solicitud-tarjeta {
+  display: flex;
+  min-height: calc(100vh - 70px); /* restando el navbar */
+  font-family: 'Inter', sans-serif;
+}
+
+.columna-izquierda {
+  flex: 1;
+  background: #f7f9fc;
+  padding: 2rem;
+}
+
+.columna-izquierda h2 {
+  margin-bottom: 0.5rem;
+}
+
+.columna-izquierda p {
+  margin-bottom: 1rem;
+}
+
+select,
+input[type='file'] {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.4rem 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #ffffff;
+}
+
+.columna-formulario {
+  flex: 1;
+  background: #1a1a2e;
+  color: white;
+  padding: 2rem;
+}
+
+.columna-formulario h3 span {
+  color: #51c638;
+}
+
+.columna-formulario label {
+  margin-top: 1rem;
+  font-weight: bold;
+  display: block;
+}
+
+.columna-formulario small {
+  color: #aaa;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.columna-formulario button {
+  background: #51c638;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  margin-top: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.columna-formulario button:hover:enabled {
+  background: #43a52f;
+}
+
+.columna-formulario button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.columna-derecha {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  border-left: 2px solid white;
+}
+
+/* Modal sencillo */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.custom-modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.custom-modal-content h4 {
+  margin-bottom: 1rem;
+  color: #343a40;
+}
+
+.custom-modal-content p {
+  margin-bottom: 1.5rem;
+  color: #6c757d;
+}
+
+.custom-modal-content button {
+  background-color: #1a6dff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-modal-content button:hover {
+  background-color: #0056b3;
+}

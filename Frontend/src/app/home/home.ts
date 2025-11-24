@@ -46,7 +46,7 @@ export class Home {
       titulo: 'Renovaciones y extravíos',
       descripcion: 'Renueva tu servicio de forma sencilla o reporta extravíos.',
       icon: 'pi pi-file-arrow-up',
-      ruta: '/Renovaciones'
+      ruta: '/renovaciones'
     },
   ];
 

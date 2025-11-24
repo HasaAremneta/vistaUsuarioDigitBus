@@ -1,0 +1,89 @@
+<!-- src/app/solicitudes/solicitudes.component.html -->
+
+<div class="solicitud-tarjeta">
+  <!-- Columna izquierda: selección -->
+  <div class="columna-izquierda">
+    <h2>Trámite de <strong>solicitud</strong></h2>
+    <p>
+      Selecciona el tipo de beneficio que deseas <strong>solicitar</strong>
+    </p>
+
+    <select [(ngModel)]="tipoSeleccionado">
+      <option value="">Ninguno</option>
+      <option value="estudiante">Estudiantes</option>
+      <option value="tercera">Personas de la tercera edad</option>
+      <option value="discapacidad">Personas con discapacidad</option>
+      <option value="general">General</option>
+    </select>
+  </div>
+
+  <!-- Columna central: formulario -->
+  <div class="columna-formulario" *ngIf="tipoSeleccionado">
+    <h3>
+      Solicitud para <span>{{ labelTipo }}</span>
+    </h3>
+
+    <!-- Archivos por tipo -->
+    <ng-container *ngIf="tipoSeleccionado === 'discapacidad'">
+      <label>Documento del DIF o institución médica:</label>
+      <input type="file" (change)="subirArchivo($event, 'discapacidad')" />
+      <small>
+        Credencial del DIF o constancia médica oficial que acredite la discapacidad.
+      </small>
+    </ng-container>
+
+    <ng-container *ngIf="tipoSeleccionado === 'estudiante'">
+      <label>Comprobante de estudios:</label>
+      <input type="file" (change)="subirArchivo($event, 'comprobante')" />
+      <small>
+        Recibo de inscripción, colegiatura o constancia de estudios vigente.
+      </small>
+    </ng-container>
+
+    <ng-container *ngIf="tipoSeleccionado === 'tercera'">
+      <label>Comprobante de edad:</label>
+      <input type="file" (change)="subirArchivo($event, 'comprobante')" />
+      <small>Documento que acredite tener 60 años o más.</small>
+    </ng-container>
+
+    <!-- Tipo general: solo voucher -->
+    <ng-container *ngIf="tipoSeleccionado === 'general'">
+      <label>Voucher:</label>
+      <input type="file" (change)="subirArchivo($event, 'identificación')" />
+      <small>Sube el voucher de pago del Pagobus.</small>
+    </ng-container>
+
+    <!-- Identificación + foto cuando NO es general -->
+    <ng-container *ngIf="tipoSeleccionado !== 'general'">
+      <label>Identificación oficial</label>
+      <input type="file" (change)="subirArchivo($event, 'identificación')" />
+
+      <label>Foto reciente (tipo pasaporte)</label>
+      <input type="file" (change)="subirArchivo($event, 'foto')" />
+      <small>Formato JPG o PNG, máximo 2MB</small>
+    </ng-container>
+
+    <!-- Sucursal -->
+    <label>Seleccione para entrega:</label>
+    <select [(ngModel)]="sucursal">
+      <option value="">Seleccione sucursal</option>
+      <option *ngFor="let s of sucursales" [value]="s">{{ s }}</option>
+    </select>
+
+    <button (click)="enviarSolicitud()" [disabled]="loading">
+      {{ loading ? 'Enviando...' : 'Enviar solicitud' }}
+    </button>
+  </div>
+
+  <!-- Columna derecha: imagen -->
+  <div class="columna-derecha"></div>
+
+  <!-- Modal simple -->
+  <div class="custom-modal-overlay" *ngIf="showModal">
+    <div class="custom-modal-content">
+      <h4>{{ modalTitle }}</h4>
+      <p>{{ modalMessage }}</p>
+      <button (click)="closeCustomModal()">Cerrar</button>
+    </div>
+  </div>
+</div>

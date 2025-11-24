@@ -1,0 +1,199 @@
+<div class="page">
+  <main class="container">
+    <div class="intro">
+      <h1>
+        Trámite de <span class="accent">{{ accionTitle }}</span>
+      </h1>
+      <p class="hint">
+        Selecciona el tipo de beneficio que deseas <b>{{ accionTitle }}</b>
+      </p>
+    </div>
+
+    <div class="grid">
+      <!-- Columna izquierda: selección -->
+      <section class="selector">
+        <label class="label">¿Qué deseas hacer?</label>
+        <div class="select-wrap">
+          <select [(ngModel)]="accion" (ngModelChange)="onAccionChange()">
+            <option value="">Ninguno</option>
+            <option value="renovacion">Renovación</option>
+            <option value="extravio">Extravío</option>
+          </select>
+          <span class="chev">▾</span>
+        </div>
+
+        <div class="cards">
+          <button
+            class="card"
+            [ngClass]="{
+              active: tipoSeleccionado === 'estudiante',
+              disabled: accion === 'renovacion' && tipoSeleccionado !== 'estudiante'
+            }"
+            (click)="pickTipo('estudiante')"
+          >
+            Estudiantes
+          </button>
+
+          <button
+            class="card"
+            [ngClass]="{
+              active: tipoSeleccionado === 'tercera',
+              disabled: accion === 'renovacion'
+            }"
+            (click)="pickTipo('tercera')"
+          >
+            Personas de la tercera edad
+          </button>
+
+          <button
+            class="card"
+            [ngClass]="{
+              active: tipoSeleccionado === 'discapacidad',
+              disabled: accion === 'renovacion'
+            }"
+            (click)="pickTipo('discapacidad')"
+          >
+            Personas con discapacidad
+          </button>
+
+          <button
+            class="card"
+            [ngClass]="{
+              active: tipoSeleccionado === 'general',
+              disabled: accion === 'renovacion'
+            }"
+            (click)="pickTipo('general')"
+          >
+            General
+          </button>
+        </div>
+
+        <p *ngIf="accion === 'renovacion'" class="note">
+          * La renovación solo aplica para <b>Tarjeta Estudiante</b>.
+        </p>
+      </section>
+
+      <!-- Columna derecha: panel de documentos -->
+      <section class="panel" *ngIf="accion && tipoSeleccionado">
+        <div class="panel-content">
+          <h3>Documentación requerida para {{ panelTitle }}</h3>
+
+          <!-- Renovación (solo estudiante): comprobante -->
+          <ng-container *ngIf="accion === 'renovacion'; else extravioTpl">
+            <div class="field">
+              <label>Comprobante (pago/inscripción vigentes)</label>
+              <input
+                class="file"
+                type="file"
+                (change)="subirArchivo($event, 'comprobante')"
+              />
+              <small>Formato JPG/PNG/PDF — máx 2MB</small>
+            </div>
+          </ng-container>
+
+          <!-- Extravío -->
+          <ng-template #extravioTpl>
+            <!-- General: voucher -->
+            <ng-container *ngIf="tipoSeleccionado === 'general'; else noGeneralTpl">
+              <div class="field">
+                <label>Voucher</label>
+                <input
+                  class="file"
+                  type="file"
+                  (change)="subirArchivo($event, 'voucher')"
+                />
+                <small>Voucher de pago del Pagobus</small>
+              </div>
+            </ng-container>
+
+            <!-- Discapacidad -->
+            <ng-template #noGeneralTpl>
+              <ng-container *ngIf="tipoSeleccionado === 'discapacidad'; else otrosTiposTpl">
+                <div class="field">
+                  <label>Documento del DIF / constancia médica</label>
+                  <input
+                    class="file"
+                    type="file"
+                    (change)="subirArchivo($event, 'comprobante')"
+                  />
+                </div>
+                <div class="field">
+                  <label>Identificación oficial</label>
+                  <input
+                    class="file"
+                    type="file"
+                    (change)="subirArchivo($event, 'identificacion')"
+                  />
+                </div>
+                <div class="field">
+                  <label>Foto reciente (tipo pasaporte)</label>
+                  <input
+                    class="file"
+                    type="file"
+                    (change)="subirArchivo($event, 'foto')"
+                  />
+                  <small>Formato JPG o PNG — máx 2MB</small>
+                </div>
+              </ng-container>
+
+              <!-- Estudiante / Tercera edad -->
+              <ng-template #otrosTiposTpl>
+                <div class="field">
+                  <label>Comprobante</label>
+                  <input
+                    class="file"
+                    type="file"
+                    (change)="subirArchivo($event, 'comprobante')"
+                  />
+                </div>
+                <div class="field">
+                  <label>Identificación oficial</label>
+                  <input
+                    class="file"
+                    type="file"
+                    (change)="subirArchivo($event, 'identificacion')"
+                  />
+                </div>
+                <div class="field">
+                  <label>Foto reciente (tipo pasaporte)</label>
+                  <input
+                    class="file"
+                    type="file"
+                    (change)="subirArchivo($event, 'foto')"
+                  />
+                  <small>Formato JPG o PNG — máx 2MB</small>
+                </div>
+              </ng-template>
+            </ng-template>
+          </ng-template>
+
+          <div class="field">
+            <label>Sucursal de entrega</label>
+            <div class="select-wrap light">
+              <select [(ngModel)]="sucursal">
+                <option value="">Seleccione sucursal</option>
+                <option *ngFor="let s of sucursales" [value]="s">
+                  {{ s }}
+                </option>
+              </select>
+              <span class="chev">▾</span>
+            </div>
+          </div>
+
+          <button class="btn" [disabled]="enviando" (click)="enviar()">
+            {{ enviando ? 'Enviando...' : 'Enviar documentos' }}
+          </button>
+
+          <ul *ngIf="documentos.length" class="files-list">
+            <li *ngFor="let d of documentos">
+              <span class="dot"></span>
+              {{ d.nombre }} <em>({{ d.tipo }})</em>
+            </li>
+          </ul>
+        </div>
+
+        <div class="panel-art" aria-hidden="true"></div>
+      </section>
+    </div>
+  </main>
+</div>

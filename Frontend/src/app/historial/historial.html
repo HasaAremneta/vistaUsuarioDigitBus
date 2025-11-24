@@ -1,0 +1,61 @@
+<div class="historial-page">
+  <main class="contenido">
+
+    <h1>Mis Tarjetas y Saldos</h1>
+
+    <div *ngIf="loading">Cargando información...</div>
+
+    <div *ngIf="error && !loading" class="error-msg">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && !error && tarjetas.length === 0">
+      No tienes tarjetas registradas.
+    </div>
+
+    <div
+      *ngFor="let tarjeta of tarjetas"
+      class="tarjeta-box"
+    >
+      <h2>
+        Tarjeta: {{ tarjeta.NUMTARJETA }} ({{ tarjeta.TIPO }})
+      </h2>
+
+      <div class="saldo-box">
+        Saldo actual:
+        ${{ tarjeta.SALDO | number : '1.2-2' }} MXN
+      </div>
+
+      <h3>Historial de recargas</h3>
+
+      <ul
+        *ngIf="getRecargas(tarjeta.IDTARJETA).length > 0; else noRecargas"
+        class="lista-recargas"
+      >
+        <li
+          *ngFor="let recarga of getRecargas(tarjeta.IDTARJETA)"
+          class="item-recarga"
+        >
+          <span class="fecha">
+            {{ recarga.FECHARECARGA | date : 'dd/MM/yyyy' : '' : 'es-MX' }}
+          </span>
+
+          <span class="cantidad">
+            + ${{ recarga.MONTO | number : '1.2-2' }}
+          </span>
+
+          <span
+            class="establecimiento"
+            *ngIf="recarga.NOMBREESTABLECIMIENTO"
+          >
+            ({{ recarga.NOMBREESTABLECIMIENTO }})
+          </span>
+        </li>
+      </ul>
+
+      <ng-template #noRecargas>
+        <p>No hay recargas para esta tarjeta.</p>
+      </ng-template>
+    </div>
+  </main>
+</div>
