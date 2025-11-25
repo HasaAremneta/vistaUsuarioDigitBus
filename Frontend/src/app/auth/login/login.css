@@ -1,10 +1,16 @@
 /* Fondo global viene desde styles.css, aquí el layout */
 .inicio-sesion-page {
-  min-height: calc(100vh - 70px);
+  min-height: 100vh; /* que abarque toda la pantalla */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 3rem 1rem;
+
+  /* 🔹 Fondo */
+  background-image: url('/assets/img/fondoLogin.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Contenido centrado */

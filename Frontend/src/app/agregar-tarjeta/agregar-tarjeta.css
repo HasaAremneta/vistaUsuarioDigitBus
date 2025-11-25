@@ -1,40 +1,87 @@
 .container-main {
   margin-top: 3rem;
-  display: flex;
   justify-content: center;
   align-items: flex-start;
   min-height: calc(100vh - 120px);
+  position: absolute;
+  z-index: 99;
+  display: flex;
+  width: 100%;
   font-family: 'Inter', sans-serif;
-  background-color: #f8f9fa;
 }
 
-.profile-settings-card {
+.tbl-tarjetas {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-items: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.tbl-tarjetas table {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  margin: 2%;
+  border-collapse: collapse;
+}
+
+.tbl-tarjetas table th {
+  background-color: #0056b3;
+  color: white;
+  font-size: large;
+  padding: 15px;
+}
+
+.tbl-tarjetas table td {
+  border: 2px solid #0056b3;
+  margin: 10px;
+  padding: 8px 10px;
+}
+
+.card-form {
   background-color: #ffffff;
   padding: 3rem 4rem;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  text-align: left;
+  text-align: center;
   width: 100%;
   max-width: 500px;
+  position: relative;
 }
 
-.profile-settings-card h2 {
+.card-form h2 {
   color: #343a40;
   margin-bottom: 3rem;
   font-weight: 600;
   font-size: 2.2rem;
-  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6c757d;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #dc3545;
 }
 
 .form-label {
   font-weight: bold;
-  color: #343a40;
+  color: #007bff;
   margin-bottom: 0.5rem;
   display: block;
+  text-align: left;
   font-size: 1.1rem;
 }
 
-.form-control {
+.form-control,
+.form-select {
   border: none;
   border-bottom: 2px solid #007bff;
   border-radius: 0;
@@ -43,22 +90,27 @@
   box-shadow: none !important;
   font-size: 1.1rem;
   color: #343a40;
-  background-color: transparent;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: #0056b3;
   outline: none;
 }
 
-.btn-group {
-  display: grid;
-  gap: 1rem;
+.form-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
 }
 
-.btn-save-changes {
-  background-color: #28a745;
-  border-color: #28a745;
+.btn-save-card {
+  background-color: #343a40;
+  border-color: #343a40;
   padding: 1rem 3rem;
   border-radius: 0.5rem;
   font-weight: bold;
@@ -66,30 +118,12 @@
   font-size: 1.2rem;
   transition: background-color 0.3s ease;
   width: 100%;
-  margin-top: 0.5rem;
-}
-
-.btn-save-changes:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
-}
-
-.btn-back {
-  display: block;
   margin-top: 1.5rem;
-  color: #007bff;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  text-align: center;
 }
 
-.btn-back:hover {
-  text-decoration: underline;
-}
-
-.divider {
-  margin: 2rem 0;
+.btn-save-card:hover {
+  background-color: #212529;
+  border-color: #1a1d20;
 }
 
 /* Modal */
@@ -139,4 +173,14 @@
 
 .custom-modal-content button:hover {
   background-color: #0056b3;
+}
+
+.btn-new-card {
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(63, 131, 63);
+  color: white;
+  padding: 10px;
+  margin: 20px 40% 20px 40%;
+  font-size: x-large;
 }

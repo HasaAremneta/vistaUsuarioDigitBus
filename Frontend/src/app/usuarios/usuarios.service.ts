@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../environment/environment';
-import { ValidarPasswordRequest, ValidarPasswordResponse, ActualizarDatosPerfilRequest, ActualizarPasswordRequest } from './usuarios.models';
+import { ValidarPasswordRequest, ValidarPasswordResponse, ActualizarDatosPerfilRequest, ActualizarPasswordRequest, TarjetaUsuario } from './usuarios.models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuariosService {
-  
+
   private apiUrl = environment.apiUrl;
 
   constructor(private http:HttpClient){}
@@ -23,5 +23,18 @@ export class UsuariosService {
 
    actualizarPassword(payload: ActualizarPasswordRequest):Observable<any>{
     return this.http.patch<any>(`${this.apiUrl}/usuarios/actualizarPassword`,payload);
+   }
+
+   //Metodo de Agregar Tarjeta
+   getTarjetasUsuario(idPersonal:string):Observable<TarjetaUsuario[]>{
+    return this.http.get<{ tarjetas?: TarjetaUsuario[]; recordset?: TarjetaUsuario[] }>(`${this.apiUrl}/usuarios/tarjetasU/${idPersonal}`).pipe(
+      map(response => response.tarjetas || response.recordset || [])
+    );
+   }
+   crearTarjeta(payload: {idPersonal: string; numTarjeta: string; tipo: string;}):Observable<any>{
+    return this.http.post<any>(`${this.apiUrl}/usuarios/nuevaTarjeta`,payload);
+   }
+   eliminarTarjeta(idTarjeta:number):Observable<any>{
+    return this.http.delete<any>(`${this.apiUrl}/usuarios/eliminarTarjeta/${idTarjeta}`);
    }
 }

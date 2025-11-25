@@ -8,6 +8,10 @@ import { Home } from './home/home';
 import { Historial } from './historial/historial';
 import { Solicitudes } from './solicitudes/solicitudes';
 import { Ajustes } from './ajustes/ajustes';
+import { AjustesPerfil } from './ajustes-perfil/ajustes-perfil';
+import { AgregarTarjeta } from './agregar-tarjeta/agregar-tarjeta';
+import { PaymentMenu } from './payment-menu/payment-menu';
+import { PagoSucursal } from './pago-sucursal/pago-sucursal';
 
 export const routes: Routes = [
   { path: '',redirectTo: 'login', pathMatch: 'full'},
@@ -27,4 +31,12 @@ export const routes: Routes = [
   {path: 'renovaciones', component: Renovaciones},
   //Ajustes
   {path: 'ajustes', component: Ajustes},
+  //Ajustes de Perfil
+  {path: 'ajustes-perfil', component: AjustesPerfil},
+  //Agregar Tarjeta
+  {path: 'agregar-tarjeta', component: AgregarTarjeta},
+  //Pago Menu
+  {path: 'payment-menu', component: PaymentMenu},
+  //Pago Sucursal
+  {path: 'pago-sucursal', component: PagoSucursal}
 ];

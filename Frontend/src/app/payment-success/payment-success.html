@@ -1,0 +1,22 @@
+<img src="assets/img/fondoLogin.png" alt="" class="fondo" />
+
+<div class="payment-success">
+  <div class="success-icon">
+    <i class="pi pi-check-circle" style="font-size: 18vh; color: green;"></i>
+  </div>
+
+  <h1>¡Pago exitoso!</h1>
+  <p>Gracias por tu compra. Tu pago ha sido procesado correctamente.</p>
+
+  <p *ngIf="loading" style="margin-top: 8px; color: #666;">
+    Registrando la recarga en tu tarjeta...
+  </p>
+  <p *ngIf="!loading && errorMessage" style="margin-top: 8px; color: #c53030;">
+    {{ errorMessage }}
+  </p>
+
+  <a routerLink="/home" class="btn-back">
+    Regresar al inicio
+    <i class="pi pi-arrow-left" style="margin-left: 5px; font-size: small;"></i>
+  </a>
+</div>

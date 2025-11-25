@@ -1,0 +1,66 @@
+<div class="pago-sucursal">
+  <main class="contenido">
+    <h1>
+      Elige tu <strong>método de pago</strong> en sucursal
+    </h1>
+
+    <section class="seccion-central">
+      <!-- TARJETA -->
+      <div class="tarjeta box">
+        <h2>Tarjeta</h2>
+        <p>¿Cuánto saldo deseas recargar?</p>
+
+        <label class="lbl-monto">Monto ($ mxn.):</label>
+        <input
+          class="inpt-monto"
+          type="number"
+          placeholder="0.00"
+          min="0"
+          [(ngModel)]="monto"
+          name="monto"
+        />
+
+        <label style="margin-right: 5px;">Número de tarjeta: </label>
+        <select
+          [(ngModel)]="tarjetaSeleccionada"
+          name="tarjetaSeleccionada"
+        >
+          <option value="">Selecciona tu tarjeta</option>
+          <option
+            *ngFor="let item of tarjetas"
+            [value]="item.IDTARJETA"
+          >
+            {{ item.NUMTARJETA }} ({{ item.TIPO }})
+          </option>
+        </select>
+
+        <button
+          class="btn-pagar"
+          (click)="enviarPago()"
+          [disabled]="!formularioValido"
+        >
+          Proceder al pago
+          <i class="pi pi-receipt" style="margin-left: 2%;"></i>
+        </button>
+      </div>
+
+      <!-- EXTRAS -->
+      <div class="extra">
+        <img
+          src="../../assets/img/promo-indrive.jpg"
+          alt="Publicidad inDrive"
+          class="banner"
+        />
+
+        <div class="guia">
+          <h3>Guía <span class="azul">rápida</span></h3>
+          <ol>
+            <li><strong>Ingresa</strong> el monto que deseas recargar a tu tarjeta.</li>
+            <li><strong>Selecciona</strong> la tarjeta que vas a recargar.</li>
+            <li><strong>Pulsa</strong> el botón para proceder al pago.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

@@ -1,10 +1,14 @@
 .registro-page {
-  min-height: calc(100vh - 70px);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 3rem 1rem;
-  font-family: 'Inter', sans-serif;
+
+  background-image: url('/assets/img/fondoLogin.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .container-main {

@@ -18,3 +18,12 @@ export interface ActualizarPasswordRequest {
   nombreUsuario: string;
   nuevaPassword: string;
 }
+
+export interface TarjetaUsuario{
+  IDTARJETA: number;
+  NUMTARJETA: string;
+  TIPO: string;
+  SALDO: number;
+  FECHAEMISION: string;
+  FECHAVECIMIENTO: string;
+}

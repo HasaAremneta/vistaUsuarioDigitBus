@@ -1,0 +1,93 @@
+<button class="btn-new-card" (click)="validarCantidadTarjetas()">
+  Agregar nueva tarjeta
+</button>
+
+<!-- Formulario (modal tipo tarjeta centrada) -->
+<div class="container container-main" *ngIf="showForm">
+  <div class="card-form">
+    <i class="pi pi-times close-btn" (click)="closeForm()"></i>
+    <h2>Agregar tarjeta</h2>
+
+    <form (ngSubmit)="saveCard()">
+      <div class="mb-3">
+        <label for="cardNumber" class="form-label">Número de tarjeta:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cardNumber"
+          [(ngModel)]="cardNumber"
+          name="cardNumber"
+          (input)="formatCardNumber()"
+          placeholder="xxxx-xxxx-xxxx-xxxx"
+          maxlength="19"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="cardType" class="form-label">Selecciona el tipo de tarjeta:</label>
+        <select
+          class="form-select"
+          id="cardType"
+          [(ngModel)]="cardType"
+          name="cardType"
+        >
+          <option value="" disabled>Tipo de tarjeta</option>
+          <option value="ESTUDIANTE">Estudiante</option>
+          <option value="ADULTOM/CAPACIDADESD">
+            Adulto Mayor / Capacidades Diferentes
+          </option>
+          <option value="GENERAL">General</option>
+        </select>
+      </div>
+
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-save-card">
+          Guardar tarjeta
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Tabla de tarjetas -->
+<div class="tbl-tarjetas">
+  <table>
+    <thead>
+      <tr>
+        <th>No. Tarjeta</th>
+        <th>Tipo</th>
+        <th>Saldo</th>
+        <th>Fecha Emisión</th>
+        <th>Fecha Vencimiento</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let tarjeta of tarjetasU">
+        <td>{{ tarjeta.NUMTARJETA }}</td>
+        <td>{{ tarjeta.TIPO }}</td>
+        <td>{{ tarjeta.SALDO }}</td>
+        <td>{{ tarjeta.FECHAEMISION | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ tarjeta.FECHAVECIMIENTO | date: 'dd/MM/yyyy' }}</td>
+        <td>
+          <button
+            (click)="eliminarTarjeta(tarjeta.IDTARJETA)"
+            class="p-button-rounded p-button-danger p-button-sm"
+          >
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div *ngIf="showModal" class="custom-modal-overlay">
+  <div class="custom-modal-content">
+    <h4>{{ modalTitle }}</h4>
+    <p>{{ modalMessage }}</p>
+    <button (click)="closeCustomModal()">Cerrar</button>
+  </div>
+</div>

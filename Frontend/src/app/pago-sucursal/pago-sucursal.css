@@ -1,0 +1,149 @@
+:root {
+  --verde: #51c638;
+  --azul: #1a6dff;
+  --azul-marino: #2a3547;
+  --blanco: #ffffff;
+}
+
+.pago-sucursal {
+  background-color: #f7f9fc;
+  min-height: 100vh;
+  font-family: 'Vertiga', sans-serif;
+}
+
+.contenido {
+  padding: 2rem;
+  max-width: 1300px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: var(--azul-marino);
+}
+
+.seccion-central {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.box {
+  background-color: var(--blanco);
+  padding: 1.5rem;
+  border-radius: 12px;
+  flex: 1;
+  min-width: 280px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  background-color: var(--blanco);
+  font-size: 0.95rem;
+}
+
+.lbl-monto {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: x-large;
+}
+
+.inpt-monto {
+  width: 100%;
+  padding: 0.6rem;
+  border: none;
+  border-bottom: solid #ccc;
+  border-radius: 6px;
+  background-color: var(--blanco);
+  font-size: 2.95rem;
+  margin-bottom: 1rem;
+}
+
+.inpt-monto:focus {
+  outline: none;
+  border-color: var(--azul);
+}
+
+.btn-pagar {
+  background-color: #0c7b2f !important;
+  color: white;
+  width: 100%;
+  padding: 0.75rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 0 4px 0 #0c7b2f;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.btn-pagar:hover {
+  transform: scale(1.05);
+  background-color: #23cd58;
+}
+
+.btn-pagar:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #0c7b2f;
+}
+
+.btn-pagar:disabled {
+  background-color: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.extra {
+  flex: 1;
+  min-width: 280px;
+}
+
+.banner {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.guia {
+  position: relative;
+  padding: 1rem;
+  border-radius: 12px;
+  background-image: linear-gradient(
+      rgba(26, 109, 255, 0.5),
+      rgba(26, 109, 255, 0.5)
+    ),
+    url('/assets/img/fondo-guia.png');
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  border: 2px solid var(--verde);
+}
+
+.guia h3 {
+  margin-bottom: 1rem;
+}
+
+.guia ol {
+  padding-left: 1rem;
+}
+
+.guia li {
+  margin-bottom: 0.5rem;
+}
+
+.azul {
+  color: var(--azul);
+}

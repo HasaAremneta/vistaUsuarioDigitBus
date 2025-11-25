@@ -1,1 +1,84 @@
-<p>ajustes-perfil works!</p>
+<div class="container-main">
+  <div class="profile-settings-card">
+    <h2>Ajustes del perfil</h2>
+
+    <!-- Formulario usuario y correo -->
+    <form (ngSubmit)="saveUserData()">
+      <div class="mb-3">
+        <label for="username" class="form-label">Nombre de usuario:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          [placeholder]="username"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico:</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          [placeholder]="email"
+        />
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn-save-changes">
+          Guardar usuario y correo
+        </button>
+      </div>
+    </form>
+
+    <hr class="divider" />
+
+    <!-- Formulario contraseña -->
+    <form (ngSubmit)="savePassword()">
+      <div class="mb-3">
+        <label for="curPassword" class="form-label">Contraseña Actual:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="curPassword"
+          [(ngModel)]="curPassword"
+          name="curPassword"
+          placeholder="Contraseña Actual"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="newPassword" class="form-label">Nueva contraseña:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="newPassword"
+          [(ngModel)]="newPassword"
+          name="newPassword"
+          placeholder="Nueva contraseña"
+        />
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn-save-changes">
+          Actualizar contraseña
+        </button>
+      </div>
+    </form>
+
+    <a routerLink="/ajustes" class="btn-back">Volver</a>
+  </div>
+</div>
+
+<!-- Modal -->
+<div *ngIf="showModal" class="custom-modal-overlay">
+  <div class="custom-modal-content">
+    <h4>{{ modalTitle }}</h4>
+    <p>{{ modalMessage }}</p>
+    <button (click)="closeCustomModal()">Cerrar</button>
+  </div>
+</div>
