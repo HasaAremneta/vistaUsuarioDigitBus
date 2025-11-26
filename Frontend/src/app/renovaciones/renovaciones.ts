@@ -125,31 +125,41 @@ export class Renovaciones implements OnInit {
     });
   }
 
-  async subirArchivo(event: Event, tipoDoc: string){
-    const input = event.target as HTMLInputElement;
-    console.log('subirArchivo triggered, input:', input);
-    if(!input.files || input.files.length === 0) {
-      console.log('No files found on input.');
-      return;
-    }
+  async onFileChange(event: Event, tipoDoc: string): Promise<void> {
+    console.log('onFileChange triggered for type:', tipoDoc, 'event:', event);
+    
+    try {
+      const input = event.target as HTMLInputElement;
+      console.log('Input element:', input, 'files:', input?.files?.length);
+      
+      if (!input?.files || input.files.length === 0) {
+        console.log('No files selected for', tipoDoc);
+        return;
+      }
 
-    const f = input.files[0];
-    console.log('File selected:', f.name, f.size, f.type);
-    try{
-      const base64 = await this.convertirABase64(f);
+      const file = input.files[0];
+      console.log('Processing file:', file.name, 'size:', file.size, 'type:', file.type);
+
+      const base64 = await this.convertirABase64(file);
       const soloBase64 = (base64 || '').toString().split(',')[1] || '';
+      
       this.documentos.push({
         tipo: tipoDoc,
-        nombre: f.name,
+        nombre: file.name,
         base64Data: soloBase64
       });
-      console.log('Documentos after push:', this.documentos);
-      this.cdr.detectChanges(); // asegurar re-render inmediato
-      // limpiar el input para permitir volver a seleccionar el mismo archivo si se necesita
+
+      console.log('Documento agregado. Total documentos:', this.documentos.length);
+      console.log('Documentos array:', this.documentos);
+      
+      // Limpiar input
       input.value = '';
-    }catch (err){
-      console.log('Error al convertir archivo a base64', err);
-      alert('Ocurrió un error al leer el archivo.');
+      
+      // Forzar detección de cambios
+      this.cdr.detectChanges();
+    } catch (err) {
+      console.error('Error en onFileChange:', err);
+      alert('Ocurrió un error al procesar el archivo.');
     }
   }
 

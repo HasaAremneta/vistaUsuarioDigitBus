@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -39,7 +39,7 @@ export class Solicitudes implements OnInit {
     'Terminal Portales de la Arboleda'
   ];
 
-  constructor(private solicitudesService: SolicitudesService, private router: Router){}
+  constructor(private solicitudesService: SolicitudesService, private router: Router, private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.idPersonal = localStorage.getItem('idPersonal');
@@ -57,25 +57,41 @@ export class Solicitudes implements OnInit {
     }
   }
 
-  async subirArchivo(event: Event, tipoDoc: string) {
-    const input = event.target as HTMLInputElement;
-    if(!input.files || input.files.length === 0) return;
+  async onFileChange(event: Event, tipoDoc: string): Promise<void> {
+    console.log('onFileChange triggered for type:', tipoDoc, 'event:', event);
+    
+    try {
+      const input = event.target as HTMLInputElement;
+      console.log('Input element:', input, 'files:', input?.files?.length);
+      
+      if (!input?.files || input.files.length === 0) {
+        console.log('No files selected for', tipoDoc);
+        return;
+      }
 
-    const archivo = input.files[0];
-    try{
+      const archivo = input.files[0];
+      console.log('Processing file:', archivo.name, 'size:', archivo.size, 'type:', archivo.type);
+
       const base64 = await this.convertirABase64(archivo);
-      const soloBase64 = base64.split(',')[1] || base64;
-
+      const soloBase64 = (base64 || '').toString().split(',')[1] || base64;
+      
       this.documentos.push({
         tipo: tipoDoc,
         nombre: archivo.name,
         base64Data: soloBase64
       });
 
-      //limpiar el input para permitir subir el mismo archivo nuevamente si es necesario
+      console.log('Documento agregado. Total documentos:', this.documentos.length);
+      console.log('Documentos array:', this.documentos);
+      
+      // Limpiar input
       input.value = '';
-    }catch(error){
-      console.log('Error al convertir archivo a base64',error);
+      
+      // Forzar detección de cambios
+      this.cdr.detectChanges();
+    } catch (err) {
+      console.error('Error en onFileChange:', err);
+      alert('Ocurrió un error al procesar el archivo.');
     }
   }
 

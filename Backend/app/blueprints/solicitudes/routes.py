@@ -121,3 +121,12 @@ def crear_solicitud():
         
         print("Error al crear solicitud:", e)
         return jsonify({"success": False, "message": "Error al crear solicitud", "details": str(e)}), 500
+
+
+# Alias: aceptar POST directamente en /solicitudes (sin /crear)
+# Algunas llamadas del frontend pueden apuntar a /solicitudes en lugar de /solicitudes/crear.
+# Añadimos una ruta corta que delega en la misma lógica para evitar errores de preflight/404.
+@bp.post("/")
+@token_required
+def crear_solicitud_alias():
+    return crear_solicitud()

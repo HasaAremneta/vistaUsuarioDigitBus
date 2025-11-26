@@ -26,7 +26,16 @@
     <!-- Archivos por tipo -->
     <ng-container *ngIf="tipoSeleccionado === 'discapacidad'">
       <label>Documento del DIF o institución médica:</label>
-      <input type="file" (change)="subirArchivo($event, 'discapacidad')" />
+      <input
+        #fileInput_discapacidad
+        style="display: none;"
+        type="file"
+        accept=".jpg,.jpeg,.png,.pdf"
+        (change)="onFileChange($event, 'discapacidad')"
+      />
+      <button type="button" class="file-btn" (click)="fileInput_discapacidad.click()">
+        Seleccionar archivo
+      </button>
       <small>
         Credencial del DIF o constancia médica oficial que acredite la discapacidad.
       </small>
@@ -34,7 +43,16 @@
 
     <ng-container *ngIf="tipoSeleccionado === 'estudiante'">
       <label>Comprobante de estudios:</label>
-      <input type="file" (change)="subirArchivo($event, 'comprobante')" />
+      <input
+        #fileInput_comprobante
+        style="display: none;"
+        type="file"
+        accept=".jpg,.jpeg,.png,.pdf"
+        (change)="onFileChange($event, 'comprobante')"
+      />
+      <button type="button" class="file-btn" (click)="fileInput_comprobante.click()">
+        Seleccionar archivo
+      </button>
       <small>
         Recibo de inscripción, colegiatura o constancia de estudios vigente.
       </small>
@@ -42,24 +60,60 @@
 
     <ng-container *ngIf="tipoSeleccionado === 'tercera'">
       <label>Comprobante de edad:</label>
-      <input type="file" (change)="subirArchivo($event, 'comprobante')" />
+      <input
+        #fileInput_comprobante_edad
+        style="display: none;"
+        type="file"
+        accept=".jpg,.jpeg,.png,.pdf"
+        (change)="onFileChange($event, 'comprobante')"
+      />
+      <button type="button" class="file-btn" (click)="fileInput_comprobante_edad.click()">
+        Seleccionar archivo
+      </button>
       <small>Documento que acredite tener 60 años o más.</small>
     </ng-container>
 
     <!-- Tipo general: solo voucher -->
     <ng-container *ngIf="tipoSeleccionado === 'general'">
       <label>Voucher:</label>
-      <input type="file" (change)="subirArchivo($event, 'identificación')" />
+      <input
+        #fileInput_voucher
+        style="display: none;"
+        type="file"
+        accept=".jpg,.jpeg,.png,.pdf"
+        (change)="onFileChange($event, 'identificación')"
+      />
+      <button type="button" class="file-btn" (click)="fileInput_voucher.click()">
+        Seleccionar archivo
+      </button>
       <small>Sube el voucher de pago del Pagobus.</small>
     </ng-container>
 
     <!-- Identificación + foto cuando NO es general -->
     <ng-container *ngIf="tipoSeleccionado !== 'general'">
       <label>Identificación oficial</label>
-      <input type="file" (change)="subirArchivo($event, 'identificación')" />
+      <input
+        #fileInput_id
+        style="display: none;"
+        type="file"
+        accept=".jpg,.jpeg,.png,.pdf"
+        (change)="onFileChange($event, 'identificación')"
+      />
+      <button type="button" class="file-btn" (click)="fileInput_id.click()">
+        Seleccionar archivo
+      </button>
 
       <label>Foto reciente (tipo pasaporte)</label>
-      <input type="file" (change)="subirArchivo($event, 'foto')" />
+      <input
+        #fileInput_foto
+        style="display: none;"
+        type="file"
+        accept=".jpg,.jpeg,.png"
+        (change)="onFileChange($event, 'foto')"
+      />
+      <button type="button" class="file-btn" (click)="fileInput_foto.click()">
+        Seleccionar archivo
+      </button>
       <small>Formato JPG o PNG, máximo 2MB</small>
     </ng-container>
 

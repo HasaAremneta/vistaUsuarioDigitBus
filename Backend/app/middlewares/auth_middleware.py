@@ -1,7 +1,7 @@
 import os
 import jwt
 from functools import wraps
-from flask import request, jsonify, g
+from flask import request, jsonify, g, make_response
 from dotenv import load_dotenv
 
 # Cargamos las variables de entorno desde el archivo .env
@@ -19,6 +19,10 @@ def token_required(f):
     #Autenticación con JWT y manejo de errores como tambien guardar el usuario en g.usuario
     @wraps(f)
     def wrapped(*args, **kwargs):
+        # Allow preflight OPTIONS requests to pass without authentication
+        # so CORS preflight can succeed.
+        if request.method == 'OPTIONS':
+            return make_response('', 200)
         auth_header = request.headers.get('Authorization', None)
         parts = auth_header.split()
 

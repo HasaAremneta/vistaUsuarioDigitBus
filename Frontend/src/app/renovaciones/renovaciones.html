@@ -83,10 +83,16 @@
             <div class="field">
               <label>Comprobante (pago/inscripción vigentes)</label>
               <input
-                class="file"
+                #fileInput_comprobante
+                id="file-comprobante"
+                style="display: none;"
                 type="file"
-                (change)="subirArchivo($event, 'comprobante')"
+                accept=".jpg,.jpeg,.png,.pdf"
+                (change)="onFileChange($event, 'comprobante')"
               />
+              <button type="button" class="file-btn" (click)="fileInput_comprobante.click()">
+                Seleccionar archivo
+              </button>
               <small>Formato JPG/PNG/PDF — máx 2MB</small>
             </div>
           </ng-container>
@@ -98,10 +104,16 @@
               <div class="field">
                 <label>Voucher</label>
                 <input
-                  class="file"
+                  #fileInput_voucher
+                  id="file-voucher"
+                  style="display: none;"
                   type="file"
-                  (change)="subirArchivo($event, 'voucher')"
+                  accept=".jpg,.jpeg,.png,.pdf"
+                  (change)="onFileChange($event, 'voucher')"
                 />
+                <button type="button" class="file-btn" (click)="fileInput_voucher.click()">
+                  Seleccionar archivo
+                </button>
                 <small>Voucher de pago del Pagobus</small>
               </div>
             </ng-container>
@@ -112,26 +124,44 @@
                 <div class="field">
                   <label>Documento del DIF / constancia médica</label>
                   <input
-                    class="file"
+                    #fileInput_comprobante
+                    id="file-comprobante-disc"
+                    style="display: none;"
                     type="file"
-                    (change)="subirArchivo($event, 'comprobante')"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    (change)="onFileChange($event, 'comprobante')"
                   />
+                  <button type="button" class="file-btn" (click)="fileInput_comprobante.click()">
+                    Seleccionar archivo
+                  </button>
                 </div>
                 <div class="field">
                   <label>Identificación oficial</label>
                   <input
-                    class="file"
+                    #fileInput_identificacion
+                    id="file-identificacion-disc"
+                    style="display: none;"
                     type="file"
-                    (change)="subirArchivo($event, 'identificacion')"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    (change)="onFileChange($event, 'identificacion')"
                   />
+                  <button type="button" class="file-btn" (click)="fileInput_identificacion.click()">
+                    Seleccionar archivo
+                  </button>
                 </div>
                 <div class="field">
                   <label>Foto reciente (tipo pasaporte)</label>
                   <input
-                    class="file"
+                    #fileInput_foto
+                    id="file-foto-disc"
+                    style="display: none;"
                     type="file"
-                    (change)="subirArchivo($event, 'foto')"
+                    accept=".jpg,.jpeg,.png"
+                    (change)="onFileChange($event, 'foto')"
                   />
+                  <button type="button" class="file-btn" (click)="fileInput_foto.click()">
+                    Seleccionar archivo
+                  </button>
                   <small>Formato JPG o PNG — máx 2MB</small>
                 </div>
               </ng-container>
@@ -141,26 +171,44 @@
                 <div class="field">
                   <label>Comprobante</label>
                   <input
-                    class="file"
+                    #fileInput_comprobante_otros
+                    id="file-comprobante-otros"
+                    style="display: none;"
                     type="file"
-                    (change)="subirArchivo($event, 'comprobante')"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    (change)="onFileChange($event, 'comprobante')"
                   />
+                  <button type="button" class="file-btn" (click)="fileInput_comprobante_otros.click()">
+                    Seleccionar archivo
+                  </button>
                 </div>
                 <div class="field">
                   <label>Identificación oficial</label>
                   <input
-                    class="file"
+                    #fileInput_identificacion_otros
+                    id="file-identificacion-otros"
+                    style="display: none;"
                     type="file"
-                    (change)="subirArchivo($event, 'identificacion')"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    (change)="onFileChange($event, 'identificacion')"
                   />
+                  <button type="button" class="file-btn" (click)="fileInput_identificacion_otros.click()">
+                    Seleccionar archivo
+                  </button>
                 </div>
                 <div class="field">
                   <label>Foto reciente (tipo pasaporte)</label>
                   <input
-                    class="file"
+                    #fileInput_foto_otros
+                    id="file-foto-otros"
+                    style="display: none;"
                     type="file"
-                    (change)="subirArchivo($event, 'foto')"
+                    accept=".jpg,.jpeg,.png"
+                    (change)="onFileChange($event, 'foto')"
                   />
+                  <button type="button" class="file-btn" (click)="fileInput_foto_otros.click()">
+                    Seleccionar archivo
+                  </button>
                   <small>Formato JPG o PNG — máx 2MB</small>
                 </div>
               </ng-template>
