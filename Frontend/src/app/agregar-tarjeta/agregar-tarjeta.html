@@ -69,7 +69,7 @@
         <td>{{ tarjeta.TIPO }}</td>
         <td>{{ tarjeta.SALDO }}</td>
         <td>{{ tarjeta.FECHAEMISION | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ tarjeta.FECHAVECIMIENTO | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ tarjeta.FECHAVENCIMIENTO | date: 'dd/MM/yyyy' }}</td>
         <td>
           <button
             (click)="eliminarTarjeta(tarjeta.IDTARJETA)"

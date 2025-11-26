@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RenovacionesService } from './renovaciones.service';
@@ -32,7 +32,22 @@ export class Renovaciones implements OnInit {
     'Terminal Portales de la Arboleda'
   ];
 
-  constructor(private renovacionesService:RenovacionesService, private router:Router){}
+  constructor(private renovacionesService:RenovacionesService, private router:Router, private cdr: ChangeDetectorRef){}
+
+  onPanelClick(event: Event): void {
+    const target = event.target as HTMLElement | null;
+    if (!target) return;
+
+    // Si el click fue sobre un input file (o un hijo del label), detectar y loggear
+    const inputEl = (target.closest && target.closest('input[type="file"]')) as HTMLInputElement | null;
+    if (inputEl) {
+      console.log('onPanelClick detected click on file input:', inputEl, 'files:', inputEl.files);
+    }
+  }
+
+  debugFileClick(event: Event): void {
+    console.log('debugFileClick event:', event, 'target:', event.target);
+  }
 
   ngOnInit(): void {
       this.idPersonal = localStorage.getItem('idPersonal');
@@ -112,9 +127,14 @@ export class Renovaciones implements OnInit {
 
   async subirArchivo(event: Event, tipoDoc: string){
     const input = event.target as HTMLInputElement;
-    if(!input.files || input.files.length === 0) return;
+    console.log('subirArchivo triggered, input:', input);
+    if(!input.files || input.files.length === 0) {
+      console.log('No files found on input.');
+      return;
+    }
 
     const f = input.files[0];
+    console.log('File selected:', f.name, f.size, f.type);
     try{
       const base64 = await this.convertirABase64(f);
       const soloBase64 = (base64 || '').toString().split(',')[1] || '';
@@ -123,11 +143,13 @@ export class Renovaciones implements OnInit {
         nombre: f.name,
         base64Data: soloBase64
       });
+      console.log('Documentos after push:', this.documentos);
+      this.cdr.detectChanges(); // asegurar re-render inmediato
+      // limpiar el input para permitir volver a seleccionar el mismo archivo si se necesita
       input.value = '';
     }catch (err){
       console.log('Error al convertir archivo a base64', err);
       alert('Ocurrió un error al leer el archivo.');
-      
     }
   }
 

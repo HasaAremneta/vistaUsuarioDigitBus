@@ -58,13 +58,18 @@ export class PagoSucursal implements OnInit {
     }
 
     const montoCentavos = (this.monto ?? 0) * 100;
-
+    console.log('Iniciando pago con los siguientes datos:', {
+      monto: this.monto,
+      montoCentavos: montoCentavos,
+      tarjeta: this.tarjetaSeleccionada
+    });
     this.paymentService.createCheckoutSession(montoCentavos, this.tarjetaSeleccionada).subscribe({
       next: (response) => {
         console.log('Redirigiendo al pago:', response);
         localStorage.setItem('idTarjeta', this.tarjetaSeleccionada);
         localStorage.setItem('monto',String(this.monto));
         window.location.href = response.url;
+        
       },
       error: (err) => {
         console.error('Error al enviar el pago:', err);

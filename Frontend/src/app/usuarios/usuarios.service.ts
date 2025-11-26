@@ -26,11 +26,10 @@ export class UsuariosService {
    }
 
    //Metodo de Agregar Tarjeta
-   getTarjetasUsuario(idPersonal:string):Observable<TarjetaUsuario[]>{
-    return this.http.get<{ tarjetas?: TarjetaUsuario[]; recordset?: TarjetaUsuario[] }>(`${this.apiUrl}/usuarios/tarjetasU/${idPersonal}`).pipe(
-      map(response => response.tarjetas || response.recordset || [])
-    );
-   }
+   getTarjetasUsuario(idPersonal: string): Observable<TarjetaUsuario[]> {
+  return this.http.get<TarjetaUsuario[]>(`${this.apiUrl}/usuarios/tarjetasU/${idPersonal}`);
+}
+
    crearTarjeta(payload: {idPersonal: string; numTarjeta: string; tipo: string;}):Observable<any>{
     return this.http.post<any>(`${this.apiUrl}/usuarios/nuevaTarjeta`,payload);
    }

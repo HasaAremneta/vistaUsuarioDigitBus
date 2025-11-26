@@ -14,8 +14,8 @@ stripe.api_key = STRIPE_API_KEY
 
 
 # URLs de éxito/cancel (puedes moverlas a .env si quieres)
-STRIPE_SUCCESS = os.getenv("STRIPE_SUCCESS_URL", "http://localhost:5173/PaymentSuccess")
-CANCEL_URL = os.getenv("STRIPE_CANCEL_URL", "http://localhost:5173/pago-sucursal")
+STRIPE_SUCCESS = os.getenv("STRIPE_SUCCESS_URL", "http://localhost:4200/payment-success")
+CANCEL_URL = os.getenv("STRIPE_CANCEL_URL", "http://localhost:4200/pago-sucursal")
 
 @bp.get("/")
 def home():
@@ -26,6 +26,9 @@ def create_checkout_session():
     data = request.get_json(silent=True) or {}
     monto = data.get("monto") #esperado en centavos para MXN si así lo manda tu frontend
     tarjeta = data.get("tarjeta") #esperado "sucursal" o "recarga"
+
+    print("Monto recibido:", monto)
+    print("Tarjeta recibida:", tarjeta)
 
     if monto is None or tarjeta is None:
         return jsonify({"error": "Faltan parámetros 'monto' o 'tarjeta'"}), 400
@@ -86,18 +89,16 @@ def success():
         # Insert en RECARGAS y obtener IDRECARGA
         cursor.execute(
             """
-            DECLARE @Inserted TABLE(IDRECARGA INT);
-            INSERT INTO RECARGAS (
-                IDTARJETA,
-                IDESTABLECIMIENTO,
-                MONTO,
-                TIPOTRANSACCION,
-                STATUS,
-                FECHARECARGA
-            )
-            OUTPUT INSERTED.IDRECARGA INTO @Inserted
-            VALUES (?, 0, ?, 'RECARGA', 'COMPLETADA', GETDATE());
-            SELECT IDRECARGA FROM @Inserted;
+                INSERT INTO RECARGAS (
+                    IDTARJETA,
+                    IDESTABLECIMIENTO,
+                    MONTO,
+                    TIPOTRANSACCION,
+                    STATUS,
+                    FECHARECARGA
+                )
+                OUTPUT INSERTED.IDRECARGA
+                VALUES (?, 0, ?, 'RECARGA', 'COMPLETADA', GETDATE());
             """,
             (id_tarjeta, round(monto_float, 2))
         )

@@ -74,7 +74,7 @@
       </section>
 
       <!-- Columna derecha: panel de documentos -->
-      <section class="panel" *ngIf="accion && tipoSeleccionado">
+  <section class="panel" *ngIf="accion && tipoSeleccionado" (click)="onPanelClick($event)">
         <div class="panel-content">
           <h3>Documentación requerida para {{ panelTitle }}</h3>
 

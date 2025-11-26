@@ -12,6 +12,7 @@ import { AjustesPerfil } from './ajustes-perfil/ajustes-perfil';
 import { AgregarTarjeta } from './agregar-tarjeta/agregar-tarjeta';
 import { PaymentMenu } from './payment-menu/payment-menu';
 import { PagoSucursal } from './pago-sucursal/pago-sucursal';
+import { PaymentSuccess } from './payment-success/payment-success';
 
 export const routes: Routes = [
   { path: '',redirectTo: 'login', pathMatch: 'full'},
@@ -38,5 +39,8 @@ export const routes: Routes = [
   //Pago Menu
   {path: 'payment-menu', component: PaymentMenu},
   //Pago Sucursal
-  {path: 'pago-sucursal', component: PagoSucursal}
+  {path: 'pago-sucursal', component: PagoSucursal},
+
+  {path: 'payment-success', component: PaymentSuccess} 
+  
 ];

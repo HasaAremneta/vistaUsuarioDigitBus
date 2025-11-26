@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HistorialService } from './historial.service';
 import { Tarjeta, Recarga } from './historial.models';
+import { forkJoin, catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-historial',
@@ -18,7 +19,7 @@ export class Historial implements OnInit {
   loading: boolean = false;
   error: string | null = null;
 
-  constructor(private historialService: HistorialService, private router: Router){}
+  constructor(private historialService: HistorialService, private router: Router,  private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
     const idPersonal = localStorage.getItem('idPersonal');
@@ -28,6 +29,7 @@ export class Historial implements OnInit {
     }
 
     this.cargarTarjetasYRecargas(idPersonal);
+    
   }
 
   private cargarTarjetasYRecargas(idPersonal: string): void {
@@ -35,43 +37,65 @@ export class Historial implements OnInit {
     this.error = null;
 
     this.historialService.getTarjetas(idPersonal).subscribe({
-      next:(response) => {
+      next: (response) => {
         this.tarjetas = response.tarjetas || [];
+        console.log('Tarjetas cargadas:', this.tarjetas);
+        this.cdr.detectChanges(); 
 
-        if(this.tarjetas.length === 0){
+        if (this.tarjetas.length === 0) {
           this.loading = false;
+          this.cdr.detectChanges();
           return;
         }
 
-        let pendientes = this.tarjetas.length;
+        
+        const recargasObservables = this.tarjetas.map((tarjeta) =>
+          this.historialService.getRecargas(tarjeta.IDTARJETA).pipe(
+            catchError((err) => {
+              console.error(`Error al cargar recargas de tarjeta ${tarjeta.IDTARJETA}:`, err);
+              return of({ recargas: [] }); 
+            })
+          )
+        );
 
-        this.tarjetas.forEach((tarjeta) => {
-          this.historialService.getRecargas(tarjeta.IDTARJETA).subscribe({
-            next:(recRes) => {
-              this.recargasPorTarjetas[tarjeta.IDTARJETA] = recRes.recargas || [];
-            },
-            error:(err) => {
-              console.log("Error al cargar recargas:",err);
-              this.recargasPorTarjetas[tarjeta.IDTARJETA] = [];
-            },
-            complete: () => {
-              pendientes--;
-              if (pendientes === 0) {
-                this.loading = false;
-              }
-            }
-          });
+        console.log('Observables creados:', recargasObservables.length);
+        
+        forkJoin(recargasObservables).subscribe({
+          next: (results) => {
+            const recargasTemp: { [idTarjeta: number]: Recarga[] } = {};
+            
+            results.forEach((recRes, index) => {
+              const tarjeta = this.tarjetas[index];
+              const recargas = recRes.recargas || [];
+
+              recargasTemp[tarjeta.IDTARJETA] = recargas;
+              console.log(`Recargas cargadas para tarjeta ${tarjeta.IDTARJETA}:`, recargas.length);
+            });
+
+            
+            this.recargasPorTarjetas = { ...recargasTemp };
+            this.loading = false;
+            this.cdr.detectChanges(); 
+          },
+          error: (err) => {
+            console.error("Error al cargar recargas:", err);
+            this.loading = false;
+            this.cdr.detectChanges(); 
+          }
         });
       },
-      error:(err) => {
-        console.log('Error al cargar tarjetas:',err);
+      error: (err) => {
+        console.error('Error al cargar tarjetas:', err);
         this.error = 'Error al cargar el historial. Por favor, inténtelo de nuevo más tarde.';
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
 
+
   getRecargas(tarjetaId: number): Recarga[] {
     return this.recargasPorTarjetas[tarjetaId] || [];
+
   }
 }

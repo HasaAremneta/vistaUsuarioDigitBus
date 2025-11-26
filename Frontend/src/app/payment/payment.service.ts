@@ -16,7 +16,7 @@ export class PaymentService {
     return this.http.post<{url: string}>(`${this.apiUrl}/payment/create-checkout-session`,
       {
         monto: monto,
-        tarjetaId: tarjetaId
+        tarjeta: tarjetaId
       },
       {
         headers:{

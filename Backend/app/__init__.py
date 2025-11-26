@@ -21,9 +21,9 @@ def create_app():
     frontend_origin = os.getenv("FRONTEND_BASE_URL", "http://localhost:4200")
     
     CORS(
-        app, 
-        resources={r"/api/*": {"origins": frontend_origin}},
-        supports_credentials=True
+    app,
+    resources={r"/*": {"origins": frontend_origin}},
+    supports_credentials=True
     )
 
     # CORS(app, resources={r"/*": {"origins": "*"}})

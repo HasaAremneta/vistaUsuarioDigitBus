@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { TarjetaUsuario } from '../usuarios/usuarios.models';
@@ -22,7 +22,7 @@ export class AgregarTarjeta implements OnInit {
   modalMessage = '';
   showForm = false;
 
-  constructor(private usuariosService: UsuariosService) {}
+  constructor(private usuariosService: UsuariosService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.cargarTarjetasUsuario();
@@ -37,7 +37,10 @@ export class AgregarTarjeta implements OnInit {
     this.usuariosService.getTarjetasUsuario(idPersonal).subscribe({
       next: (tarjetas) => {
         this.tarjetasU = tarjetas;
+        console.log(idPersonal, '-> Cargando tarjetas del usuario...');
+        console.log('👉 Tarjetas obtenidas:', tarjetas);
         console.log('Tarjetas del usuario:', this.tarjetasU);
+        this.cdr.detectChanges();
 
       },
       error: (err) => {

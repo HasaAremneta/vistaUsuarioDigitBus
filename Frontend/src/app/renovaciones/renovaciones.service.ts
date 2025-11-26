@@ -22,7 +22,7 @@ export class RenovacionesService {
   }
 
   getTarjetas(idPersonal: string): Observable<TarjetasRenovacionResponse>{
-    return this.http.get<TarjetasRenovacionResponse>(      `${this.apiUrl}/renovacionYextravios/tarjetas/${idPersonal}`,{headers:this.getAuthHeaders()});
+    return this.http.get<TarjetasRenovacionResponse>(`${this.apiUrl}/renovacionYextravios/tarjetas/${idPersonal}`,{headers:this.getAuthHeaders()});
   }
 
   enviarRenovacion(payload: RenovacionPayload): Observable<RenovacionResponse>{

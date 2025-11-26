@@ -37,84 +37,100 @@ export class Registro {
   ){}
 
   onSubmit() {
-    this.showError = false;
-    this.errorMessage = '';
+  this.showError = false;
+  this.errorMessage = '';
 
-    // Validaciones básicas
-    if (!this.nombre || !this.email || !this.password || !this.confirmPassword) {
-      this.showError = true;
-      this.errorMessage = 'Por favor, complete todos los campos.';
-      return;
-    }
+  console.log("📤 Enviando formulario de registro...");
+  console.log("👉 Datos del formulario:", {
+    nombre: this.nombre,
+    email: this.email,
+    password: this.password,
+    confirmPassword: this.confirmPassword,
+    aceptaTerminos: this.aceptaTerminos
+  });
 
-    if(this.password.length < 8){
-      this.showError = true;
-      this.errorMessage = 'La contraseña debe tener al menos 8 caracteres.';
-      return;
-    }
-
-    if (this.password !== this.confirmPassword) {
-      this.showError = true;
-      this.errorMessage = 'Las contraseñas no coinciden.';
-      return;
-    }
-
-    if (!this.aceptaTerminos) {
-      this.showError = true;
-      this.errorMessage = 'Debe aceptar los términos y condiciones.';
-      return;
-    }
-
-    this.loading = true;
-
-    // Preparar el payload
-    const payload: RegisterRequest = {
-      NombreUsuario: this.nombre,
-      Nombre: this.nombre.split(' ')[0] || this.nombre,
-      ApellidoPaterno: 'ApellidoP',
-      ApellidoMaterno: 'ApellidoM',
-      DiaNacimiento: '01',
-      MesNacimiento: '01',
-      AnoNacimiento: '2000',
-      Correo: this.email,
-      password: this.password,
-    };
-
-    // Llamar al servicio de registro
-    this.authService.register(payload).subscribe({
-      next: (response) => {
-        this.loading = false;
-
-        this.showCustomModal(
-          'Cuenta Creada',
-          response.message || '¡Tu cuenta ha sido creada exitosamente! Ya puedes iniciar sesión.'
-        );
-
-        //Liempiar el formulario
-        this.nombre = '';
-        this.email = '';
-        this.password = '';
-        this.confirmPassword = '';
-        this.aceptaTerminos = false;
-
-
-        setTimeout(() => {
-          this.closeModal();
-          this.router.navigate(['/login']);
-        }, 3000);
-      },
-      error: (err) => {
-        this.loading = false;
-        this.showError = true;
-
-        if (err.error && err.error.message) {
-          this.errorMessage = err.error.message;
-        }else{
-          this.errorMessage = 'Error en el registro. Por favor, intente nuevamente.';
-        }
-      }
-    });
+  // Validaciones básicas
+  if (!this.nombre || !this.email || !this.password || !this.confirmPassword) {
+    this.showError = true;
+    this.errorMessage = 'Por favor, complete todos los campos.';
+    return;
   }
+
+  if (this.password.length < 8) {
+    this.showError = true;
+    this.errorMessage = 'La contraseña debe tener al menos 8 caracteres.';
+    return;
+  }
+
+  if (this.password !== this.confirmPassword) {
+    this.showError = true;
+    this.errorMessage = 'Las contraseñas no coinciden.';
+    return;
+  }
+
+  if (!this.aceptaTerminos) {
+    this.showError = true;
+    this.errorMessage = 'Debe aceptar los términos y condiciones.';
+    return;
+  }
+
+  this.loading = true;
+
+  // Preparar el payload
+  const payload: RegisterRequest = {
+    NombreUsuario: this.nombre,
+    Nombre: this.nombre.split(' ')[0] || this.nombre,
+    ApellidoPaterno: 'ApellidoP',
+    ApellidoMaterno: 'ApellidoM',
+    DiaNacimiento: '01',
+    MesNacimiento: '01',
+    AnoNacimiento: '2000',
+    Correo: this.email,
+    password: this.password,
+  };
+
+  console.log("📦 Payload enviado a la API:", payload);
+
+  // Llamar al servicio de registro
+  this.authService.register(payload).subscribe({
+    next: (response) => {
+      this.loading = false;
+
+      console.log("✅ Respuesta de la API:", response);
+
+      this.showCustomModal(
+        'Cuenta Creada',
+        response.message || '¡Tu cuenta ha sido creada exitosamente! Ya puedes iniciar sesión.'
+      );
+
+      // Limpiar formulario
+      this.nombre = '';
+      this.email = '';
+      this.password = '';
+      this.confirmPassword = '';
+      this.aceptaTerminos = false;
+
+      setTimeout(() => {
+        this.closeModal();
+        this.router.navigate(['/login']);
+      }, 3000);
+    },
+
+    error: (err) => {
+      this.loading = false;
+      this.showError = true;
+
+      console.error("❌ Error en la API:", err);
+
+      if (err.error && err.error.message) {
+        this.errorMessage = err.error.message;
+      } else {
+        this.errorMessage = 'Error en el registro. Por favor, intente nuevamente.';
+      }
+    }
+  });
+}
+
 
   showCustomModal(title: string, message: string) {
     this.modalTitle = title;

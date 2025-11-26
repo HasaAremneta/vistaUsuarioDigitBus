@@ -26,7 +26,7 @@ def registro():
     
     try:
         #Fecha nacimiento YYYY-MM-DD (con ceros a la izquierda)
-        fecha_nacimiento = f"{str(data['AnoNacimientOo']).zfill(4)}-{str(data['MesNacimiento']).zfill(2)}-{str(data['DiaNacimiento']).zfill(2)}"
+        fecha_nacimiento = f"{str(data['AnoNacimiento']).zfill(4)}-{str(data['MesNacimiento']).zfill(2)}-{str(data['DiaNacimiento']).zfill(2)}"
 
         #Contraseña aceptada por bcrypt que pude tener caracteres especiales
         hashed = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt(rounds=10)).decode('utf-8')
@@ -45,7 +45,7 @@ def registro():
         
         #Insertar en la tabla PERSONAL
         cursor.execute(
-            """"
+            """
             INSERT INTO PERSONAL (NOMBREUSUARIO, NOMBRE, APELLIDOPATERNO, APELLIDOMATERNO, FECHANACIMIENTO, CORREO)
             VALUES (?, ?, ?, ?, ?, ?)
             """,
@@ -82,8 +82,13 @@ def tarjetas_usuario(idPersonal):
         cursor = conn.cursor()
 
         # Consulta para obtener las tarjetas del usuario
-        cursor.execute("SELECT * FROM TARJETAS WHERE IDPERSONAL = ?", (idPersonal,))
+        cursor.execute(
+    "SELECT * FROM TARJETAS WHERE IDPERSONAL = ?",
+    (int(idPersonal),)
+)
+
         rows = cursor.fetchall()
+        print(rows)
         data = rows_to_dicts(cursor, rows) if rows else []
         cursor.close()
         conn.close()

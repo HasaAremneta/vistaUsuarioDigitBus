@@ -19,11 +19,12 @@ export interface ActualizarPasswordRequest {
   nuevaPassword: string;
 }
 
-export interface TarjetaUsuario{
+export interface TarjetaUsuario {
   IDTARJETA: number;
   NUMTARJETA: string;
   TIPO: string;
   SALDO: number;
-  FECHAEMISION: string;
-  FECHAVECIMIENTO: string;
+  FECHAEMISION: Date;
+  FECHAVENCIMIENTO: Date;
 }
+
