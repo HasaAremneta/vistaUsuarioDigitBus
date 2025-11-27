@@ -68,13 +68,14 @@ def login():
         
         # Generación del token JWT
         payload = {
-            "id_usuario": id_usuario,
-            "id_personal": id_personal,
+            "idUsuario": id_usuario,
+            "idPersonal": id_personal,
             "nombre": nombre,
             "correo": correo,
-            "exp": datetime.utcnow() + timedelta(hours=1),  # Expira en 2 horas
+            "exp": datetime.utcnow() + timedelta(hours=1),
             "iat": datetime.utcnow()
         }
+
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
         user = {

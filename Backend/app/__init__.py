@@ -20,11 +20,7 @@ def create_app():
     # Puedes restringir a tu dominio de Angular si quieres:
     frontend_origin = os.getenv("FRONTEND_BASE_URL", "http://localhost:4200")
     
-    CORS(
-    app,
-    resources={r"/*": {"origins": frontend_origin}},
-    supports_credentials=True
-    )
+    CORS(app, resources={r"/*": {"origins": frontend_origin}})
 
     # CORS(app, resources={r"/*": {"origins": "*"}})
 

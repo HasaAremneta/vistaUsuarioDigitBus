@@ -53,11 +53,9 @@ def crear_solicitud():
         #Se crea la solicitud
         cursor.execute(
             """
-            DECLARE @Inserted TABLE (IDSOLICITUD INT);
             INSERT INTO SOLICITUDES (IDPERSONAL, TIPOTABLETA, FECHASOLICITUD, STATUS, TIPOSOLICITUD)
-            OUTPUT INSERTED.IDSOLICITUD INTO @Inserted
-            VALUES (?, ?, ?, ?, ?);
-            SELECT IDSOLICITUD FROM @Inserted;
+            OUTPUT INSERTED.IDSOLICITUD
+            VALUES (?, ?, ?, ?, ?)
             """,
             (
                 int(id_personal),
@@ -68,6 +66,7 @@ def crear_solicitud():
             )
         )
         row = cursor.fetchone()
+
         if not row:
             raise RuntimeError("No se pudo recuperar IDSOLICITUD insertado")
         id_solicitud = row[0]
@@ -126,6 +125,7 @@ def crear_solicitud():
 # Alias: aceptar POST directamente en /solicitudes (sin /crear)
 # Algunas llamadas del frontend pueden apuntar a /solicitudes en lugar de /solicitudes/crear.
 # Añadimos una ruta corta que delega en la misma lógica para evitar errores de preflight/404.
+@bp.post("")
 @bp.post("/")
 @token_required
 def crear_solicitud_alias():

@@ -2,16 +2,18 @@ from flask import Blueprint, request, jsonify, g
 from datetime import datetime
 from app.db.connection import connect_to_db
 from app.middlewares import token_required
+from flask_cors import cross_origin 
 
 bp = Blueprint('renovacionYextravios', __name__, url_prefix='/renovacionYextravios')
 
+# --- Helpers ---
 def rows_to_dicts(cursor, rows):
     if not rows:
         return []
     cols = [c[0] for c in cursor.description]
     return [dict(zip(cols, row)) for row in rows]
 
-def check_personal_exists(conn,id_personal: int) -> bool:
+def check_personal_exists(conn, id_personal: int) -> bool:
     cur = conn.cursor()
     cur.execute(
         """
@@ -26,24 +28,26 @@ def check_personal_exists(conn,id_personal: int) -> bool:
     cur.close()
     return ok
 
-def insert_solicitud(conn, id_personal: int, tipo_tablet: str, tipo_solicitud: str)-> int:
+def insert_solicitud(conn, id_personal: int, tipo_tablet: str, tipo_solicitud: str) -> int:
+    """
+    Inserta una solicitud y devuelve el ID generado
+    """
     cur = conn.cursor()
     cur.execute(
         """
-        DECLARE @Inserted TABLE (IDSOLICITUD INT);
         INSERT INTO dbo.SOLICITUDES (IDPERSONAL, TIPOTABLETA, FECHASOLICITUD, STATUS, TIPOSOLICITUD)
-        OUTPUT INSERTED.IDSOLICITUD INTO @Inserted
-        VALUES (?, ?, ?, 'Pendiente', ?);
-        SELECT IDSOLICITUD FROM @Inserted;
+        OUTPUT INSERTED.IDSOLICITUD
+        VALUES (?, ?, ?, 'Pendiente', ?)
         """,
-        (id_personal, str(tipo_tablet), datetime.now(), str(tipo_solicitud))
+        (id_personal, tipo_tablet, datetime.now(), tipo_solicitud)
     )
     row = cur.fetchone()
     if not row:
         cur.close()
         raise RuntimeError("No se pudo recuperar IDSOLICITUD insertado")
+    id_solicitud = row[0]
     cur.close()
-    return int(row[0])
+    return int(id_solicitud)
 
 def insert_documentos(conn, id_solicitud: int, tarjetas: str | None, constancia: str | None, vauches: str | None):
     cur = conn.cursor()
@@ -57,14 +61,14 @@ def insert_documentos(conn, id_solicitud: int, tarjetas: str | None, constancia:
     cur.close()
 
 # --- Rutas ---
-# POST /renovacionYextravios/renovacion  (solo para tipo ESTUDIANTE)
-@bp.route('/renovacion')
+# POST /renovacionYextravios/renovacion  (solo tipo ESTUDIANTE)
+@bp.route('/renovacion', methods=['POST'])
 @token_required
 def renovacion():
     data = request.get_json(silent=True) or {}
     tipo = data.get('tipo')
     documentos = data.get('documentos', [])
-    usuario = getattr(g, "usuario",{})or {}
+    usuario = getattr(g, "usuario", {}) or {}
     id_personal = usuario.get("idPersonal")
 
     if not id_personal:
@@ -116,9 +120,10 @@ def renovacion():
 # GET /renovacionYextravios/tarjetas/<idPersonal>
 @bp.route('/tarjetas/<int:id_personal>')
 @token_required
-def tarjetas_por_personal(idPersonal):
+@cross_origin()
+def tarjetas_por_personal(id_personal: int):
     try:
-        id_p = int(idPersonal)
+        id_p = int(id_personal)
     except ValueError:
         return jsonify({"success": False, "message": "idPersonal inválido (debe ser numérico)"}), 400
 
@@ -150,10 +155,10 @@ def tarjetas_por_personal(idPersonal):
         return jsonify({"success": True, "tarjetas": data}), 200
     
     except Exception as e:
+        print("ERROR EN TARJETAS:", e)
         return jsonify({"success": False, "message": "Error al obtener tarjetas", "details": str(e)}), 500
     finally:
         try:
             cursor and cursor.close()
         finally:
             conn and conn.close()
-

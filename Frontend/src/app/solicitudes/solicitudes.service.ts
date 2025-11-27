@@ -15,6 +15,16 @@ export class SolicitudesService {
 
   // Método para enviar una nueva solicitud
   enviarSolicitud(payload: SolicitudPayload): Observable<SolicitudResponse> {
-    return this.http.post<SolicitudResponse>(`${this.apiUrl}/solicitudes`, payload);
-  }
+  const token = localStorage.getItem('token'); // asegúrate que guardas el JWT aquí al hacer login
+  return this.http.post<SolicitudResponse>(
+    `${this.apiUrl}/solicitudes`,
+    payload,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+}
+
 }
