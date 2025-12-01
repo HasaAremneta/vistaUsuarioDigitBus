@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-recuperacion',
@@ -37,23 +38,36 @@ export class Recuperacion {
       return;
     }
 
-    this.loading = true;
-    this.authService.recoverPassword({ correo: this.email }).subscribe({
-      next: () => {
-        this.loading = false;
-        this.emailEnviado = true;
-      },
-      error: (err) => {
-        this.loading = false;
-        this.showError = true;
+    if(this.loading) return;
 
-        if(err.error && (err.error.error || err.error.mensaje)){
-          this.errorMessage = err.error.error || err.error.mensaje;
-        }else{
-          this.errorMessage = 'Error al enviar el correo de recuperación.';
-        }
-      }
-    });
+    this.loading = true;
+
+    this.emailEnviado = true;
+    
+    this.authService
+      .recoverPassword({ correo: this.email })
+      .pipe(
+        finalize(() => {
+          // se ejecuta al final, éxito o error
+          this.loading = false;
+        })
+      )
+      .subscribe({
+        next: () => {
+          // todo bien, no hay nada extra que hacer
+        },
+        error: (err) => {
+          // si algo falla, regresamos a la vista del formulario
+          this.emailEnviado = false;
+          this.showError = true;
+
+          if (err.error && (err.error.error || err.error.mensaje)) {
+            this.errorMessage = err.error.error || err.error.mensaje;
+          } else {
+            this.errorMessage = 'Error al enviar el correo de recuperación.';
+          }
+        },
+      });
   }
 
   resetForm(){

@@ -88,7 +88,8 @@ export class Solicitudes implements OnInit {
       input.value = '';
       
       // Forzar detección de cambios
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
+      
     } catch (err) {
       console.error('Error en onFileChange:', err);
       alert('Ocurrió un error al procesar el archivo.');
@@ -155,7 +156,7 @@ export class Solicitudes implements OnInit {
           setTimeout(() => {
             this.closeCustomModal();
             this.router.navigate(['/home']);
-          }, 1500) ;
+          }, 2500) ;
         } else {
           this.showCustomModal('Error en solicitud',response.message || 'Error inesperado en el servidor.')
         }
@@ -169,12 +170,18 @@ export class Solicitudes implements OnInit {
   }
 
   showCustomModal(title: string, message: string){
+    console.log('showCustomModal called with:', title, message);
     this.modalTitle = title;
     this.modalMessage = message;
     this.showModal = true;
+    console.log('showModal set to:', this.showModal);
+    this.cdr.markForCheck();
+    this.cdr.detectChanges();
   }
   
   closeCustomModal() {
     this.showModal = false;
+    this.cdr.markForCheck();
+    this.cdr.detectChanges();
   }
 }

@@ -112,17 +112,16 @@ input[type='file'] {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1050;
+  z-index: 1000;
 }
 
 .custom-modal-content {
   background-color: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 400px;
-  width: 90%;
+  z-index: 1001;
 }
 
 .custom-modal-content h4 {
@@ -136,13 +135,13 @@ input[type='file'] {
 }
 
 .custom-modal-content button {
-  background-color: #1a6dff;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.3rem;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .custom-modal-content button:hover {

@@ -29,7 +29,7 @@ def solicitar_recuperacion():
 
         cursor.execute(
             """
-            SELECT u.IDUSUARIO, p.NOMBREUSUARIO
+            SELECT p.NOMBREUSUARIO
             FROM PERSONAL p
             JOIN USUARIOS u ON p.NOMBREUSUARIO = u.NOMBREUSUARIO
             WHERE p.CORREO = ?
@@ -57,11 +57,19 @@ def solicitar_recuperacion():
         return jsonify({"mensaje": "Se ha enviado un correo para restablecer la contraseña."}), 200
     
     except Exception as e:
-        try:
-            cursor and cursor.close()
-        finally:
-            conn and conn.close()
-        return jsonify({"error": "Error interno del servidor."}), 500
+        import traceback
+        print("❌ Error en /recuperar/solicitar:", e)
+        traceback.print_exc()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+        
+        return jsonify({
+            "error": "Error interno del servidor.",
+            "details":str(e)
+        }),500
+
     
 # POST /recuperar/restablecer
 @bp.post('/restablecer')

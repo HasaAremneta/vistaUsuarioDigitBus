@@ -32,7 +32,25 @@ export class Renovaciones implements OnInit {
     'Terminal Portales de la Arboleda'
   ];
 
+  // Modal simple
+  showModal = false;
+  modalTitle = '';
+  modalMessage = '';
+
   constructor(private renovacionesService:RenovacionesService, private router:Router, private cdr: ChangeDetectorRef){}
+
+  // ==== MODAL ====
+  openModal(title: string, message: string) {
+    this.modalTitle = title;
+    this.modalMessage = message;
+    this.showModal = true;
+    this.cdr.detectChanges();
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+  // ==============
 
   onPanelClick(event: Event): void {
     const target = event.target as HTMLElement | null;
@@ -196,7 +214,7 @@ export class Renovaciones implements OnInit {
         return 'Adjunta el voucher.';
       }
 
-      if(requiereId && (!tieneId || tieneFoto)){
+      if(requiereId && (!tieneId || !tieneFoto)){
         return 'Adjunta identificación y foto.';
       }
     }
@@ -223,21 +241,23 @@ export class Renovaciones implements OnInit {
     request$.subscribe({
       next: (resp) => {
         this.enviando = false;
+        console.log('RESPUESTA RENOV/EXTRAVIO:', resp);
+
         if(resp.success){
-          alert('Tu trámite fue enviado correctamente.');
+          this.openModal('Trámite enviado', resp.message || 'Tu trámite fue enviado correctamente.');
           this.documentos = [];
           this.sucursal = '';
           this.tipoSeleccionado = '';
           this.accion = '';
         }else{
-          alert(resp.message || 'Error inesperado en el servidor.');
+          this.openModal('Error en trámite',resp.message || 'Error inesperado en el servidor.');
         }
       },
       error: (err) => {
-        console.error(err);
-        this.enviando = false;
-        alert('No se pudo enviar el trámite.');
-        
+      console.error('ERROR EXTRAVIO:', err);
+      console.error('BODY:', err.error);   // <--- esto
+      this.enviando = false;
+      this.openModal('Error','No se pudo enviar el trámite.');
       }
     });
   }

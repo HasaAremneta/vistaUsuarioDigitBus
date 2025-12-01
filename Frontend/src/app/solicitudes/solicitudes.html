@@ -1,5 +1,3 @@
-<!-- src/app/solicitudes/solicitudes.component.html -->
-
 <div class="solicitud-tarjeta">
   <!-- Columna izquierda: selección -->
   <div class="columna-izquierda">
@@ -31,7 +29,7 @@
         style="display: none;"
         type="file"
         accept=".jpg,.jpeg,.png,.pdf"
-        (change)="onFileChange($event, 'discapacidad')"
+        (change)="onFileChange($event, 'comprobante')"
       />
       <button type="button" class="file-btn" (click)="fileInput_discapacidad.click()">
         Seleccionar archivo
@@ -81,7 +79,7 @@
         style="display: none;"
         type="file"
         accept=".jpg,.jpeg,.png,.pdf"
-        (change)="onFileChange($event, 'identificación')"
+        (change)="onFileChange($event, 'voucher')"
       />
       <button type="button" class="file-btn" (click)="fileInput_voucher.click()">
         Seleccionar archivo
@@ -97,7 +95,7 @@
         style="display: none;"
         type="file"
         accept=".jpg,.jpeg,.png,.pdf"
-        (change)="onFileChange($event, 'identificación')"
+        (change)="onFileChange($event, 'identificacion')"
       />
       <button type="button" class="file-btn" (click)="fileInput_id.click()">
         Seleccionar archivo
@@ -124,6 +122,14 @@
       <option *ngFor="let s of sucursales" [value]="s">{{ s }}</option>
     </select>
 
+    <!-- LISTA DE DOCUMENTOS SELECCIONADOS -->
+    <ul *ngIf="documentos.length" class="files-list">
+      <li *ngFor="let d of documentos">
+        <span class="dot"></span>
+        {{ d.nombre }} <em>({{ d.tipo }})</em>
+      </li>
+    </ul>
+
     <button (click)="enviarSolicitud()" [disabled]="loading">
       {{ loading ? 'Enviando...' : 'Enviar solicitud' }}
     </button>
@@ -131,13 +137,13 @@
 
   <!-- Columna derecha: imagen -->
   <div class="columna-derecha"></div>
+</div>
 
-  <!-- Modal simple -->
-  <div class="custom-modal-overlay" *ngIf="showModal">
-    <div class="custom-modal-content">
-      <h4>{{ modalTitle }}</h4>
-      <p>{{ modalMessage }}</p>
-      <button (click)="closeCustomModal()">Cerrar</button>
-    </div>
+<!-- Modal simple - FUERA DEL CONTENEDOR PRINCIPAL -->
+<div class="custom-modal-overlay" *ngIf="showModal">
+  <div class="custom-modal-content">
+    <h4>{{ modalTitle }}</h4>
+    <p>{{ modalMessage }}</p>
+    <button (click)="closeCustomModal()">Cerrar</button>
   </div>
 </div>

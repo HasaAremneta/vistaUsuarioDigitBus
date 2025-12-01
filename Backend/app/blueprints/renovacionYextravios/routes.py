@@ -162,3 +162,104 @@ def tarjetas_por_personal(id_personal: int):
             cursor and cursor.close()
         finally:
             conn and conn.close()
+
+
+
+#Extravios 
+@bp.route('/extravios', methods=['POST'])
+@token_required
+def extravios():
+    """
+    Equivalente a la ruta POST /extravios de Node.
+    Crea una solicitud de tipo 'Extravío' y guarda la documentación.
+    """
+    data = request.get_json(silent=True) or {}
+    tipo = data.get('tipo')                   # ESTUDIANTE, TERCERA_EDAD, DISCAPACIDAD, GENERAL, etc.
+    documentos = data.get('documentos', [])
+
+    # Obtener el idPersonal EXACTAMENTE igual que en /renovacion
+    usuario = getattr(g, "usuario", {}) or {}
+    id_personal = usuario.get("idPersonal")
+
+    # DEBUG opcional para ver qué llega
+    print("DEBUG /extravios data:", data)
+    print("DEBUG /extravios usuario:", usuario)
+
+    if not id_personal:
+        return jsonify({
+            "success": False,
+            "message": "idUsuario / idPersonal no encontrado en el token"
+        }), 400
+
+    conn = None
+    try:
+        conn = connect_to_db()
+
+        # Verificar que el personal exista (usa tu helper)
+        if not check_personal_exists(conn, int(id_personal)):
+            return jsonify({
+                "success": False,
+                "message": "Personal no encontrado"
+            }), 400
+
+        # 1) Insertar solicitud de EXTRAVÍO
+        id_solicitud = insert_solicitud(
+            conn,
+            int(id_personal),
+            tipo_tablet=tipo or "",
+            tipo_solicitud="Extravío"
+        )
+
+        # 2) Mapear documentos igual que tu código de Node
+        #    const doc = { TARJETAS: null, CONSTANCIA: null, VAUCHES: null };
+        doc = {"TARJETAS": None, "CONSTANCIA": None, "VAUCHES": None}
+
+        for a in documentos:
+            t = (a.get("tipo") or "").lower().strip()
+            b64 = a.get("base64Data")
+            if not b64:
+                continue
+
+            # if (a.tipo === 'foto') doc.TARJETAS = a.base64Data;
+            if t == "foto":
+                doc["TARJETAS"] = b64
+            # else if (a.tipo === 'comprobante' || a.tipo === 'discapacidad') doc.CONSTANCIA = a.base64Data;
+            elif t in ("comprobante", "discapacidad"):
+                doc["CONSTANCIA"] = b64
+            # else if (a.tipo === 'identificacion') doc.VAUCHES = a.base64Data;
+            elif t in ("identificacion", "identificación"):
+                doc["VAUCHES"] = b64
+
+        # 3) Insertar documentos
+        insert_documentos(
+            conn,
+            id_solicitud,
+            doc["TARJETAS"],
+            doc["CONSTANCIA"],
+            doc["VAUCHES"]
+        )
+
+        conn.commit()
+
+        return jsonify({
+            "success": True,
+            "idSolicitud": id_solicitud,
+            "message": "Solicitud de extravío creada correctamente."
+        }), 200
+
+    except Exception as e:
+        print("ERROR EN /extravios:", e)
+        try:
+            conn and conn.rollback()
+        except Exception:
+            pass
+        return jsonify({
+            "success": False,
+            "message": "Error al crear solicitud de extravío",
+            "details": str(e)
+        }), 500
+    finally:
+        try:
+            conn and conn.close()
+        except Exception:
+            pass

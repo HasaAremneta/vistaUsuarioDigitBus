@@ -30,7 +30,7 @@ export class RenovacionesService {
   }
 
   enviarExtravio(payload: RenovacionPayload): Observable<RenovacionResponse>{
-    return this.http.post<RenovacionResponse>(`${this.apiUrl}/renovacionYextravios/extravio`,payload, { headers: this.getAuthHeaders() });
+    return this.http.post<RenovacionResponse>(`${this.apiUrl}/renovacionYextravios/extravios`,payload, { headers: this.getAuthHeaders() });
   }
 
 }
